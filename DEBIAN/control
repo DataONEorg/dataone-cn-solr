@@ -1,0 +1,9 @@
+Package: dataone-cn-solr-dep
+Version: 0.0.1
+Section: utils
+Priority: optional
+Architecture: all
+Depends: python-software-properties
+Installed-Size: 1 kb
+Maintainer: Skye Roseboom <sroseboo@dataone.unm.edu>
+Description: This is a metapackage that installs an apt source for solr-common-3.4.
