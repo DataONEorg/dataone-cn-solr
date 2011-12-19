@@ -22,8 +22,8 @@ cp -R /etc/solr/conf /usr/share/solr/d1-cn-index/
 cp -R /etc/solr/conf /usr/share/solr/d1-cn-log/
 
 ###### Provide modified solrconfig.xml with modified data dir path for each core
-cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/shar/solr/d1-cn-index/conf/solrconfig.xml
-cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml /usr/shar/solr/d1-cn-log/conf/solrconfig.xml
+cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/share/solr/d1-cn-index/conf/solrconfig.xml
+cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml /usr/share/solr/d1-cn-log/conf/solrconfig.xml
 
 chown -R tomcat6.tomcat6 /etc/solr
 chown -R tomcat6.tomcat6 /usr/share/solr
