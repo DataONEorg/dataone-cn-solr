@@ -1,0 +1,20 @@
+#!/bin/bash
+
+/etc/init.d/tomcat6 stop
+
+###### Remove tomcat web app config
+rm /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
+rm /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
+
+##### Remove core home dirs
+rm -rf /usr/share/solr/d1-cn-log
+rm -rf /usr/share/solr/d1-cn-index
+
+##### Restore original solr.xml config
+mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml
+
+##### Remove core data dirs
+rm -rf /var/lib/solr/data/d1-cn-index
+rm -rf /var/lib/solr/data/d1-cn-log
+
+/etc/init.d/tomcat6 start

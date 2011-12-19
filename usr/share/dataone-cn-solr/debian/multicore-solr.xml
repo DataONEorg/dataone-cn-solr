@@ -1,0 +1,6 @@
+<solr persistent="true" sharedLib="lib">
+ <cores adminPath="/admin/cores">
+  <core name="d1-cn-index" instanceDir="d1-cn-index" />
+  <core name="d1-cn-log" instanceDir="d1-cn-log" />
+ </cores>
+</solr>

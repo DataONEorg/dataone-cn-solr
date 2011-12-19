@@ -1,4 +1,32 @@
 #!/bin/bash
 
-add-apt-repository ppa:trevor/solr-3.4
-apt-get update
+/etc/init.d/tomcat6 stop
+
+##### Provide tomcat web app context for solr cores
+cp /usr/share/dataone-cn-solr/debian/d1-cn-index.xml /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
+cp /usr/share/dataone-cn-solr/debian/d1-cn-log.xml /etc/tomcat6/Catalina/localhost/d1-cn-log.xml
+
+chown -R tomcat6.tomcat6 /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
+chown -R tomcat6.tomcat6 /etc/tomcat6/Catalina/localhost/d1-cn-log.xml
+
+####### Provide multi-core solr configuration file.
+mv /usr/share/solr/solr.xml /usr/share/solr/solr.xml.bak
+cp /usr/share/dataone-cn-solr/debian/multicore-solr.xml /usr/share/solr/solr.xml
+
+###### Create core home dir
+mkdir /usr/share/solr/d1-cn-index
+mkdir /usr/share/solr/d1-cn-log
+
+###### Provide default config:
+cp -R /etc/solr/conf /usr/share/solr/d1-cn-index/
+cp -R /etc/solr/conf /usr/share/solr/d1-cn-log/
+
+###### Provide modified solrconfig.xml with modified data dir path for each core
+cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/shar/solr/d1-cn-index/conf/solrconfig.xml
+cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml /usr/shar/solr/d1-cn-log/conf/solrconfig.xml
+
+chown -R tomcat6.tomcat6 /etc/solr
+chown -R tomcat6.tomcat6 /usr/share/solr
+chown -R tomcat6.tomcat6 /var/lib/solr
+
+/etc/init.d/tomcat6 start

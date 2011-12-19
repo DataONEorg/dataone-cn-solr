@@ -1,9 +1,9 @@
-Package: dataone-cn-solr-dep
+Package: dataone-cn-solr
 Version: 0.0.1
 Section: utils
 Priority: optional
 Architecture: all
-Depends: python-software-properties
+Depends: solr-common (= 3.4.0~blubolt2~lucid1), solr-tomcat (>= 3.4.0~blubolt2~lucid1)
 Installed-Size: 1 kb
 Maintainer: Skye Roseboom <sroseboo@dataone.unm.edu>
-Description: This is a metapackage that installs an apt source for solr-common-3.4.
+Description: This is a metapackage that installs solr-3.4 along with tomcat/solr integration.
