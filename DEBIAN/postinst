@@ -1,5 +1,7 @@
 #!/bin/bash
 
+LONG_DATE=`date +%Y%m%d%H%M%S`
+
 /etc/init.d/tomcat6 stop
 
 ##### Provide tomcat web app context for solr cores
@@ -29,4 +31,11 @@ chown -R tomcat6.tomcat6 /etc/solr
 chown -R tomcat6.tomcat6 /usr/share/solr
 chown -R tomcat6.tomcat6 /var/lib/solr
 
+
+###### Configure Apache
+/etc/init.d/apache2 stop
+cp usr/share/dataone-cn-solr/debian/solr_jk.conf /etc/apache2/jk_mount/
+
+##### Start apache and tomcat
+/etc/init.d/apache2 start
 /etc/init.d/tomcat6 start

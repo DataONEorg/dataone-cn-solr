@@ -1,6 +1,7 @@
 #!/bin/bash
 
 /etc/init.d/tomcat6 stop
+/etc/init.d/apache2 stop
 
 ###### Remove tomcat web app config
 rm /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
@@ -17,4 +18,7 @@ mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml
 rm -rf /var/lib/solr/data/d1-cn-index
 rm -rf /var/lib/solr/data/d1-cn-log
 
+rm -f /etc/apache2/jk_mount/solr_jk.*
+
+/etc/init.d/apache2 start
 /etc/init.d/tomcat6 start
