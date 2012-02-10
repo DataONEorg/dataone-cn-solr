@@ -1353,10 +1353,11 @@
        in Solr's conf/xslt directory.  Changes to xslt files are checked for
        every xsltCacheLifetimeSeconds.  
     -->
+  <queryResponseWriter default="true" name="xml" class="solr.XMLResponseWriter" />  
   <queryResponseWriter name="xslt" class="solr.XSLTResponseWriter">
-    <int name="xsltCacheLifetimeSeconds">5</int>
+    <int name="xsltCacheLifetimeSeconds">60</int>
   </queryResponseWriter>
-
+  
   <!-- Query Parsers
 
        http://wiki.apache.org/solr/SolrQuerySyntax
