@@ -1,0 +1,8 @@
+ProxyRequests On
+
+<Proxy *>
+	Order allow,deny
+	Allow from all
+	Deny from none
+</Proxy> 
+
