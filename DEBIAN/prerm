@@ -18,6 +18,8 @@ mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml
 rm -rf /var/lib/solr/data/d1-cn-index
 rm -rf /var/lib/solr/data/d1-cn-log
 
+rm -f /etc/tomcat6/policy.d/53solr.policy
+
 rm -f /etc/apache2/jk_mount/solr_jk.*
 
 /etc/init.d/apache2 start

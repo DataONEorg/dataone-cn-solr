@@ -27,6 +27,10 @@ cp -R /etc/solr/conf /usr/share/solr/d1-cn-log/
 cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/share/solr/d1-cn-index/conf/solrconfig.xml
 cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml /usr/share/solr/d1-cn-log/conf/solrconfig.xml
 
+##### Provide tomcat policy file for solr
+cp /usr/share/dataone-cn-solr/debian/53solr.policy /etc/tomcat6/policy.d/
+chown -R tomcat6.tomcat6 /etc/tomcat6/policy.d/53solr.policy
+
 chown -R tomcat6.tomcat6 /etc/solr
 chown -R tomcat6.tomcat6 /usr/share/solr
 chown -R tomcat6.tomcat6 /var/lib/solr
