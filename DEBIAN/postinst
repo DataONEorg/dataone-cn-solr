@@ -4,6 +4,30 @@ LONG_DATE=`date +%Y%m%d%H%M%S`
 
 /etc/init.d/tomcat6 stop
 
+##### Copy the jar file into the correct lib directory for D1 Authorization
+
+cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar /usr/share/solr/WEB-INF/lib
+
+##### Change the web.xml to include the D1 authorization filter
+SOLR_AUTHORIZATION_FILTER="\n\
+\t<filter>\n\
+\t\t<filter-name>D1SolrAuthorizationFilter<\/filter-name>\n\
+\t\t<filter-class>org.dataone.solr.servlet.SessionAuthorizationFilter<\/filter-class>\n\
+\t<\/filter>\n\
+\t<filter-mapping>\n\
+\t\t<filter-name>D1SolrAuthorizationFilter<\/filter-name>\n\
+\t\t<url-pattern>\/*<\/url-pattern>\n\
+\t<\/filter-mapping>\n"
+
+CONTAINS_DATAONE_FILTER=$(egrep 'D1SolrAuthorizationFilter' /usr/share/solr/WEB-INF/web.xml)
+if [ "${CONTAINS_DATAONE_FILTER}" == "" ]; then
+
+        # this seems a bit fragile to do with sed, maybe perl would offer a better alternative if the below substitution causes troubles
+        sed -i.bak --regexp-extended "s/(<web-app>)/\1${SOLR_AUTHORIZATION_FILTER}/;" /usr/share/solr/WEB-INF/web.xml
+else
+        echo "DataONE Solr Authorization Filter Already added"
+fi
+
 ##### Provide tomcat web app context for solr cores
 cp /usr/share/dataone-cn-solr/debian/d1-cn-index.xml /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
 cp /usr/share/dataone-cn-solr/debian/d1-cn-log.xml /etc/tomcat6/Catalina/localhost/d1-cn-log.xml

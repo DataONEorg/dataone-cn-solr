@@ -275,16 +275,18 @@
        best performance.
    -->
 
-   <field name="id" type="string" indexed="true" stored="true" required="true" />
-   <field name="dateAggregated" type="date" indexed="true" stored="true" required="true" /> 
-   <field name="entryId" type="string" indexed="true" stored="true" required="true" />
-   <field name="pid" type="string" indexed="true" stored="true" required="true" />
-   <field name="ipAddress" type="string" indexed="true" stored="true" required="true" />
-   <field name="userAgent" type="string" indexed="true" stored="true" required="true"/>
-   <field name="subject" type="string" indexed="true" stored="true" required="true"/>
-   <field name="event" type="string" indexed="true" stored="true" required="true"/>
-   <field name="dateLogged" type="date" indexed="true" stored="true" required="true" /> 
-   <field name="nodeId" type="string" indexed="true" stored="true" required="true" />
+   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="dateAggregated" type="date" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="isPublic"          type="boolean"  indexed="true" stored="true" multiValued="false"/>
+   <field name="readPermission"    type="string"   indexed="true" stored="true" multiValued="true"/>
+   <field name="entryId" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="pid" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="ipAddress" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="userAgent" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="subject" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="event" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="dateLogged" type="date" indexed="true" stored="true" required="true" multiValued="false"/> 
+   <field name="nodeId" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
 
 
  </fields>
