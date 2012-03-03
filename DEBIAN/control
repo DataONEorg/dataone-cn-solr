@@ -1,5 +1,5 @@
 Package: dataone-cn-solr
-Version: 0.0.1
+Version: 1.0.0-RC2~unstable
 Section: utils
 Priority: optional
 Architecture: all
