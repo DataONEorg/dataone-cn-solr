@@ -1,4 +1,4 @@
-ProxyRequests On
+ProxyRequests Off
 
 <Proxy *>
 	Order allow,deny
