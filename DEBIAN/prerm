@@ -24,3 +24,6 @@ rm -f /etc/apache2/jk_mount/solr_jk.*
 
 /etc/init.d/apache2 start
 /etc/init.d/tomcat6 start
+
+## Update DateONE Version Info Doc
+java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html
