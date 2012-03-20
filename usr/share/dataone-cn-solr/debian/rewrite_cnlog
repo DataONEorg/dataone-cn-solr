@@ -6,7 +6,7 @@
 
   RewriteCond %{REQUEST_URI} ^/cn/v1/log/?$
   RewriteCond %{QUERY_STRING} !^.+$
-  RewriteRule ^/cn/v1/log/?  http://localhost/solr/d1-cn-log/select/?q=entryId:[*+TO+*]&start=0&rows=1000&wt=xslt&tr=d1log.xsl [P]
+  RewriteRule ^/cn/v1/log/?  ajp://localhost:8009/solr/d1-cn-log/select/?q=entryId:[*+TO+*]&start=0&rows=1000&wt=xslt&tr=d1log.xsl [P]
 
 # GET the date query right
   RewriteCond %{REQUEST_URI} ^/cn/v1/log/?$
@@ -45,7 +45,7 @@
   RewriteCond %{QUERY_STRING} ^(q=[^&]+)(.*)count=(\d+)(\??.*)$
   RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1%2rows=%3%4
   RewriteCond %{QUERY_STRING} ^q=.*$
-  RewriteRule ^/cn/v1/log/? http://localhost/solr/d1-cn-log/select/?&wt=xslt&tr=d1log.xsl [QSA,P]
+  RewriteRule ^/cn/v1/log/? ajp://localhost:8009/solr/d1-cn-log/select/?&wt=xslt&tr=d1log.xsl [QSA,P]
 
 
 </IfModule>
