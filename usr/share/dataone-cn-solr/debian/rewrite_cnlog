@@ -10,41 +10,57 @@
 
 # GET the date query right
   RewriteCond %{REQUEST_URI} ^/cn/v1/log/?$
-  RewriteCond %{QUERY_STRING} ^(.*)fromdate=([^&]+)\&(.*)todate=([^&]+)(.*)$
-  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=dateLogged:[%2+TO+%4]%1%5%3
-  RewriteCond %{QUERY_STRING} ^(.*)todate=([^&]+)\&(.*)fromdate=([^&]+)(.*)$
-  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=dateLogged:[%4+TO+%2]%1%5%3
-  RewriteCond %{QUERY_STRING} ^(.*)fromdate=([^&]+)(.*)$
-  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=dateLogged:[%2+TO+*]%1%3
-  RewriteCond %{QUERY_STRING} ^(.*)todate=([^&]+)(.*)$
-  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=dateLogged:[*+TO+%2]%1%3
+  RewriteCond %{QUERY_STRING} ^(.*)fromDate=([^&]+)\&(.*)toDate=([^&]+)(.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=dateLogged:[%2+TO+%4]&%1%5%3
+  RewriteCond %{QUERY_STRING} ^(.*)toDate=([^&]+)\&(.*)fromDate=([^&]+)(.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=dateLogged:[%4+TO+%2]&%1%5%3
+  RewriteCond %{QUERY_STRING} ^(.*)fromDate=([^&]+)(.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=dateLogged:[%2+TO+*]&%1%3
+  RewriteCond %{QUERY_STRING} ^(.*)toDate=([^&]+)(.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=dateLogged:[*+TO+%2]&%1%3
 
 # Solr Dates need Z for UTC while DataONE dates may have +00.00
   RewriteCond %{QUERY_STRING} ^(q=dateLogged:\[)(\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.?\d{1,3}?)\%2B\d{2}:\d{2}(.*)$
   RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1%2Z%3
-  RewriteCond %{QUERY_STRING} ^(q=dateLogged:\[\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.?\d{1,3}?Z\+TO\+)(\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.?\d{1,3}?)\%2B\d{2}:\d{2}(.*)$
+  RewriteCond %{QUERY_STRING} ^(q=dateLogged:.+\+TO\+)(\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}\.?\d{1,3}?)\%2B\d{2}:\d{2}(.*)$
   RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1%2Z%3
 
-# with or without a date, get the event query right
-# [&event={event}][&start={start}][&count={count}]
+# with or without a date, get the event and pidFilter query right
+# [&pidFilter=pidFilter][&event={event}][&start={start}][&count={count}]
 
   # a date was parsed, and there is an event
-  RewriteCond %{QUERY_STRING} ^(q=[^&]+)(.*)event=([^&]+)(.*)$
+  RewriteCond %{QUERY_STRING} ^(q=[^&]+)(.*)event=([^&]+)(\??.*)$
   RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1+AND+event:%3%2%4
 
   # no dates were parsed, but there is an event
   RewriteCond %{QUERY_STRING} !^q=[^&]+.*$
-  RewriteCond %{QUERY_STRING} ^(.*)event=([^&]+)(.*)$
-  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=event:%2%1%3
+  RewriteCond %{QUERY_STRING} ^(.*)event=([^&]+)(\??.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=event:%2&%1%3
 
-# there were no dates or events
-  RewriteCond %{QUERY_STRING} !^q=.*$
-  RewriteCond %{QUERY_STRING} ^(.*)$
-  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=entryId:[*+TO+*]&%1
+  # a date and or event was parsed, and there is a pidFilter, 
+  # pidFilter should always be the last rewrite solr query condition evaluated!
+  RewriteCond %{QUERY_STRING} ^(q=[^&]+)(.*)pidFilter=([^&]+)(\??.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1+AND+pid:%3*%2%4
 
-  RewriteCond %{QUERY_STRING} ^(q=[^&]+)(.*)count=(\d+)(\??.*)$
-  RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1%2rows=%3%4
-  RewriteCond %{QUERY_STRING} ^q=.*$
+  # no dates or events were parsed, but there is a pidFilter
+  RewriteCond %{QUERY_STRING} !^q=[^&]+.*$
+  RewriteCond %{QUERY_STRING} ^(.*)pidFilter=([^&]+)(\??.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=pid:%2*&%1%3
+  
+  # count is really rows in lucene syntax
+  RewriteCond %{QUERY_STRING} ^(.*)count=(\d+)(\??.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1rows=%2%3
+  
+  #if for whatever reason a query has not been composed, then add in the default
+  RewriteCond %{QUERY_STRING} !^q=[^&]+.*$
+  RewriteCond %{QUERY_STRING} ^(.*)
+   RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=entryId:[*+TO+*]&%1
+  
+  #if for whatever reason a query has not been composed, then add in the default
+  RewriteCond %{QUERY_STRING} ^(.*)&$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1
+   
+  RewriteCond %{QUERY_STRING} ^(q=.*)$
   RewriteRule ^/cn/v1/log/? ajp://localhost:8009/solr/d1-cn-log/select/?&wt=xslt&tr=d1log.xsl [QSA,P]
 
 
