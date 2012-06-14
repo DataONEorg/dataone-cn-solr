@@ -7,10 +7,6 @@
 rm /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
 rm /etc/tomcat6/Catalina/localhost/d1-cn-log.xml
 
-##### Remove core home dirs
-rm -rf /usr/share/solr/d1-cn-index
-rm -rf /usr/share/solr/d1-cn-log
-
 ##### Restore original solr.xml config
 mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml
 
