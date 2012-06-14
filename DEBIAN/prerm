@@ -14,10 +14,6 @@ rm -rf /usr/share/solr/d1-cn-log
 ##### Restore original solr.xml config
 mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml
 
-##### Remove core data dirs
-rm -rf /var/lib/solr/data/d1-cn-index
-rm -rf /var/lib/solr/data/d1-cn-log
-
 rm -f /etc/tomcat6/policy.d/53solr.policy
 
 rm -f /etc/apache2/jk_mount/solr_jk.*
