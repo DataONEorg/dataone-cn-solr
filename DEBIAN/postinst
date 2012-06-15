@@ -16,7 +16,7 @@ SOLR_AUTHORIZATION_FILTER="\n\
 \t<\/filter>\n\
 \t<filter-mapping>\n\
 \t\t<filter-name>D1SolrAuthorizationFilter<\/filter-name>\n\
-\t\t<url-pattern>\/*<\/url-pattern>\n\
+\t\t<url-pattern>\/d1-cn-log\/*<\/url-pattern>\n\
 \t<\/filter-mapping>\n"
 
 CONTAINS_DATAONE_FILTER=$(egrep 'D1SolrAuthorizationFilter' /usr/share/solr/WEB-INF/web.xml)
