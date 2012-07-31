@@ -9,24 +9,23 @@ LONG_DATE=`date +%Y%m%d%H%M%S`
 cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar /usr/share/solr/WEB-INF/lib
 
 ##### Change the web.xml to include the D1 authorization filter
-SOLR_LOG_AUTHORIZATION_FILTER="\n\
+SOLR_AUTHORIZATION_FILTER="\n\
 \t<filter>\n\
-\t\t<filter-name>D1LogSolrAuthorizationFilter<\/filter-name>\n\
-\t\t<filter-class>org.dataone.solr.servlet.LogServiceSessionAuthorizationFilter<\/filter-class>\n\
+\t\t<filter-name>D1SolrAuthorizationFilter<\/filter-name>\n\
+\t\t<filter-class>org.dataone.solr.servlet.SessionAuthorizationFilter<\/filter-class>\n\
 \t<\/filter>\n\
 \t<filter-mapping>\n\
-\t\t<filter-name>D1LogSolrAuthorizationFilter<\/filter-name>\n\
+\t\t<filter-name>D1SolrAuthorizationFilter<\/filter-name>\n\
 \t\t<url-pattern>\/d1-cn-log\/select<\/url-pattern>\n\
 \t\t<url-pattern>\/d1-cn-log\/select\/<\/url-pattern>\n\
 \t\t<url-pattern>\/d1-cn-log\/select\/*<\/url-pattern>\n\
 \t<\/filter-mapping>\n"
 
-CONTAINS_DATAONE_LOG_FILTER=$(egrep 'D1LogSolrAuthorizationFilter' /usr/share/solr/WEB-INF/web.xml)
-
-if [ "${CONTAINS_DATAONE_LOG_FILTER}" == "" ]; then
+CONTAINS_DATAONE_FILTER=$(egrep 'D1SolrAuthorizationFilter' /usr/share/solr/WEB-INF/web.xml)
+if [ "${CONTAINS_DATAONE_FILTER}" == "" ]; then
 
         # this seems a bit fragile to do with sed, maybe perl would offer a better alternative if the below substitution causes troubles
-        sed -i.bak --regexp-extended "s/(<web-app>)/\1${SOLR_LOG_AUTHORIZATION_FILTER}/;" /usr/share/solr/WEB-INF/web.xml
+        sed -i.bak --regexp-extended "s/(<web-app>)/\1${SOLR_AUTHORIZATION_FILTER}/;" /usr/share/solr/WEB-INF/web.xml
 else
         echo "DataONE Solr Authorization Filter Already added"
 fi
