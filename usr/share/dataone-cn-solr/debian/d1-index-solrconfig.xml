@@ -706,7 +706,7 @@
        of SearchComponents (see below) and supports distributed
        queries across multiple shards
     -->
-  <requestHandler name="search" class="solr.SearchHandler" default="true">
+  <requestHandler name="search" class="org.dataone.solr.handler.component.SolrSearchHandler" default="true">
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
       -->
@@ -1354,7 +1354,7 @@
        every xsltCacheLifetimeSeconds.  
     -->
   <queryResponseWriter name="xslt" class="solr.XSLTResponseWriter">
-    <int name="xsltCacheLifetimeSeconds">5</int>
+    <int name="xsltCacheLifetimeSeconds">7200</int>
   </queryResponseWriter>
 
   <!-- Query Parsers
