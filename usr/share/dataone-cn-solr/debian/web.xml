@@ -28,6 +28,7 @@
 		<url-pattern>/d1-cn-log/select/*</url-pattern>
 	</filter-mapping>
 
+	<!--
 	<filter>
 		<filter-name>D1SearchSolrAuthorizationFilter</filter-name>
 	 	<filter-class>org.dataone.solr.servlet.SearchServiceSessionAuthorizationFilter</filter-class>
@@ -36,6 +37,7 @@
         <filter-name>D1SearchSolrAuthorizationFilter</filter-name>
         <url-pattern>/d1-cn-index/select/*</url-pattern>
 	</filter-mapping>
+	-->
 	
   <!-- Uncomment if you are trying to use a Resin version before 3.0.19.
     Their XML implementation isn't entirely compatible with Xerces.
