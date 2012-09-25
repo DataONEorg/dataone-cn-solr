@@ -768,6 +768,14 @@
       -->
     </requestHandler>
 
+
+	<requestHandler name="/adminSelect" class="solr.SearchHandler" default="false">
+	    <lst name="defaults">
+	      <str name="echoParams">explicit</str>
+	      <int name="rows">10</int>
+	    </lst>	
+	</requestHandler>
+
   <!-- A Robust Example
 
        This example SearchHandler declaration shows off usage of the
