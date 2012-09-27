@@ -1,0 +1,9 @@
+<IfModule rewrite_module>
+  RewriteEngine On
+  
+  RewriteLog /var/log/apache2/rewrite.log
+  RewriteLogLevel 1
+
+  RewriteRule ^/cn/v1/query/solr/  ajp://localhost:8009/solr/d1-cn-index/select/ [QSA,P]
+
+</IfModule>

@@ -61,6 +61,8 @@ cp usr/share/dataone-cn-solr/debian/solr_jk.conf /etc/apache2/jk_mount/
 
 cp usr/share/dataone-cn-solr/debian/rewrite_cnlog /etc/apache2/conf.d/
 cp usr/share/dataone-cn-solr/debian/rewrite_cnsearch /etc/apache2/conf.d/
+cp usr/share/dataone-cn-solr/debian/rewrite_cnquery /etc/apache2/conf.d/
+
 cp usr/share/dataone-cn-solr/debian/proxy /etc/apache2/conf.d/
 
 ##### Start apache and tomcat
