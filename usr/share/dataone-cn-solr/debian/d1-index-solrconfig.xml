@@ -775,6 +775,9 @@
 	      <int name="rows">10</int>
 	    </lst>	
 	</requestHandler>
+	
+	<requestHandler name="/queryEngineDescription" class="org.dataone.solr.handler.component.SolrQueryEngineDescriptionHandler" default="false">
+	</requestHandler>
 
   <!-- A Robust Example
 
