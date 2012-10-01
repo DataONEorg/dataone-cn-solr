@@ -776,7 +776,7 @@
 	    </lst>	
 	</requestHandler>
 	
-	<requestHandler name="/queryEngineDescription" class="org.dataone.solr.handler.component.SolrQueryEngineDescriptionHandler" default="false">
+	<requestHandler name="/queryEngineDescription" class="org.dataone.solr.handler.SolrQueryEngineDescriptionHandler" default="false">
 	</requestHandler>
 
   <!-- A Robust Example
@@ -1359,6 +1359,7 @@
   <!--
      <queryResponseWriter name="custom" class="com.example.MyResponseWriter"/>
     -->
+    <queryResponseWriter name="qed" class="org.dataone.solr.response.QueryEngineDescriptionResponseWriter"/>
 
   <!-- XSLT response writer transforms the XML output by any xslt file found
        in Solr's conf/xslt directory.  Changes to xslt files are checked for

@@ -7,6 +7,6 @@
   RewriteCond %{QUERY_STRING} (.+)$ [NC]
   RewriteRule ^/cn/v1/query/solr/(.*)$  ajp://localhost:8009/solr/d1-cn-index/select/ [QSA,P,L]
 
-  RewriteRule ^/cn/v1/query/solr/$ ajp://localhost:8009/solr/d1-cn-index/queryEngineDescription/ [P,L]
+  RewriteRule ^/cn/v1/query/solr/$ ajp://localhost:8009/solr/d1-cn-index/queryEngineDescription/?wt=qed [P,L]
 
 </IfModule>
