@@ -4,9 +4,9 @@
   RewriteLog /var/log/apache2/rewrite.log
   RewriteLogLevel 1
 
-  RewriteCond %{QUERY_STRING} (.+)$ [NC]
+  RewriteCond %{QUERY_STRING} (.*)$ [NC]
   RewriteRule ^/cn/v1/query/solr/(.*)$  ajp://localhost:8009/solr/d1-cn-index/select/ [QSA,P,L]
 
-  RewriteRule ^/cn/v1/query/solr/?$ ajp://localhost:8009/solr/d1-cn-index/queryEngineDescription/?wt=qed [P,L]
+  RewriteRule ^/cn/v1/query/solr$ ajp://localhost:8009/solr/d1-cn-index/queryEngineDescription/?wt=qed [P,L]
 
 </IfModule>
