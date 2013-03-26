@@ -6,6 +6,7 @@ LONG_DATE=`date +%Y%m%d%H%M%S`
 
 ##### Copy the jar file into the correct lib directory for D1 Authorization
 cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar /usr/share/solr/WEB-INF/lib
+##cp /usr/share/dataone-cn-solr/debian/lib/* /usr/share/solr/WEB-INF/lib
 
 mv /usr/share/solr/WEB-INF/web.xml /usr/share/solr/WEB-INF/web.xml.bak
 cp /usr/share/dataone-cn-solr/debian/web.xml /usr/share/solr/WEB-INF/
@@ -25,8 +26,8 @@ if [ ! -d /usr/share/solr/d1-cn-index ]
 then
 	mkdir /usr/share/solr/d1-cn-index
 	cp -R /etc/solr/conf /usr/share/solr/d1-cn-index/
+	cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/share/solr/d1-cn-index/conf/solrconfig.xml
 fi
-cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/share/solr/d1-cn-index/conf/solrconfig.xml
 
 if [ ! -d /usr/share/solr/d1-cn-log ]
 then
@@ -48,7 +49,7 @@ chown -R tomcat6.tomcat6 /var/lib/solr
 
 mv /usr/share/solr/d1-cn-log/conf/schema.xml /usr/share/solr/d1-cn-log/schema.xml.bak
 cp /usr/share/dataone-cn-solr/debian/log-solr-schema.xml /usr/share/solr/d1-cn-log/conf/schema.xml
-chown -R tomcat6.tomcat6 /usr/share/solr/d1-cn-index/conf/schema.xml
+chown -R tomcat6.tomcat6 /usr/share/solr/d1-cn-log/conf/schema.xml
 
 ####get rid of the examples xslt and add in the d1log.xsl
 rm /usr/share/solr/d1-cn-log/conf/xslt/example*.*
