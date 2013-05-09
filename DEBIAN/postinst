@@ -6,7 +6,6 @@ LONG_DATE=`date +%Y%m%d%H%M%S`
 
 ##### Copy the jar file into the correct lib directory for D1 Authorization
 cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar /usr/share/solr/WEB-INF/lib
-##cp /usr/share/dataone-cn-solr/debian/lib/* /usr/share/solr/WEB-INF/lib
 
 mv /usr/share/solr/WEB-INF/web.xml /usr/share/solr/WEB-INF/web.xml.bak
 cp /usr/share/dataone-cn-solr/debian/web.xml /usr/share/solr/WEB-INF/
