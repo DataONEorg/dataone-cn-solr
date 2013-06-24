@@ -25,8 +25,8 @@ if [ ! -d /usr/share/solr/d1-cn-index ]
 then
 	mkdir /usr/share/solr/d1-cn-index
 	cp -R /etc/solr/conf /usr/share/solr/d1-cn-index/
+	cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/share/solr/d1-cn-index/conf/solrconfig.xml
 fi
-cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/share/solr/d1-cn-index/conf/solrconfig.xml
 
 if [ ! -d /usr/share/solr/d1-cn-log ]
 then
