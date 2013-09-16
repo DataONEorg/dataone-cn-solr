@@ -71,3 +71,5 @@ cp usr/share/dataone-cn-solr/debian/proxy /etc/apache2/conf.d/
 
 ## Update DateONE Version Info Doc
 java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html
+
+exit 0
