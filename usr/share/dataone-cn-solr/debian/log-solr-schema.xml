@@ -322,7 +322,7 @@
     <dynamicField name="*_f" type="sfloat" indexed="true" stored="true"/>
     <dynamicField name="*_d" type="sdouble" indexed="true" stored="true"/>
     <dynamicField name="*_dt" type="date" indexed="true" stored="true"/>
-
+    <dynamicField name="*_coordinate" type="double" indexed="true" stored="false" multiValued="true"/>
  </fields>
 
 
