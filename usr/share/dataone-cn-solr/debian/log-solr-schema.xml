@@ -247,6 +247,9 @@
         />
       </analyzer>
     </fieldType>
+    
+    <!-- A specialized field for geospatial search. If indexed, this fieldType must not be multivalued. -->
+    <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
 
     <!-- since fields of this type are by default not stored or indexed, any data added to 
          them will be ignored outright 
@@ -293,6 +296,16 @@
    <field name="country" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="region" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="city" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="geohash_1" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_2" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_3" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_4" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_5" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_6" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_7" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_8" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_9" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="location"  type="location" indexed="true" stored="true" multiValued="false"/>
    
 <!-- ======================================================================= -->
 	<!-- Dynamic field definitions. If a field name is not found, dynamicFields 
