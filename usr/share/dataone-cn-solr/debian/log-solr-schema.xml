@@ -290,22 +290,23 @@
    <field name="event" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="dateLogged" type="date" indexed="true" stored="true" required="true" multiValued="false"/> 
    <field name="nodeId" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="rightsHolder" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="formatId" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="size" type="long" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="country" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="region" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="city" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="geohash_1" type="text" 	indexed="true" stored="true" multiValued="false"/>
-   <field name="geohash_2" type="text" 	indexed="true" stored="true" multiValued="false"/>
-   <field name="geohash_3" type="text" 	indexed="true" stored="true" multiValued="false"/>
-   <field name="geohash_4" type="text" 	indexed="true" stored="true" multiValued="false"/>
-   <field name="geohash_5" type="text" 	indexed="true" stored="true" multiValued="false"/>
-   <field name="geohash_6" type="text" 	indexed="true" stored="true" multiValued="false"/>
-   <field name="geohash_7" type="text" 	indexed="true" stored="true" multiValued="false"/>
-   <field name="geohash_8" type="text" 	indexed="true" stored="true" multiValued="false"/>
-   <field name="geohash_9" type="text" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="rightsHolder" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
+   <field name="formatId" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
+   <field name="size" type="slong" indexed="true" stored="true" required="false" multiValued="false"/>
+   <field name="country" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
+   <field name="region" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
+   <field name="city" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
+   <field name="geohash_1" type="string" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_2" type="string" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_3" type="string" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_4" type="string" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_5" type="string" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_6" type="string" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_7" type="string" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_8" type="string" 	indexed="true" stored="true" multiValued="false"/>
+   <field name="geohash_9" type="string" 	indexed="true" stored="true" multiValued="false"/>
    <field name="location"  type="location" indexed="true" stored="true" multiValued="false"/>
+
    
 <!-- ======================================================================= -->
 	<!-- Dynamic field definitions. If a field name is not found, dynamicFields 
