@@ -293,6 +293,7 @@
    <field name="nodeId" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="rightsHolder" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
    <field name="formatId" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
+   <field name="formatType" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
    <field name="size" type="slong" indexed="true" stored="true" required="false" multiValued="false"/>
    <field name="country" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
    <field name="region" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
