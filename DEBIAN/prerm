@@ -1,21 +1,21 @@
 #!/bin/bash
 
-/etc/init.d/tomcat6 stop
+/etc/init.d/tomcat7 stop
 /etc/init.d/apache2 stop
 
 ###### Remove tomcat web app config
-rm /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
-rm /etc/tomcat6/Catalina/localhost/d1-cn-log.xml
+rm /etc/tomcat7/Catalina/localhost/d1-cn-index.xml
+rm /etc/tomcat7/Catalina/localhost/d1-cn-log.xml
 
 ##### Restore original solr.xml config
 mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml
 
-rm -f /etc/tomcat6/policy.d/53solr.policy
+rm -f /etc/tomcat7/policy.d/53solr.policy
 
 rm -f /etc/apache2/jk_mount/solr_jk.*
 
 /etc/init.d/apache2 start
-/etc/init.d/tomcat6 start
+/etc/init.d/tomcat7 start
 
 ## Update DateONE Version Info Doc
 java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html

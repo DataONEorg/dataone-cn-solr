@@ -2,7 +2,7 @@
 
 LONG_DATE=`date +%Y%m%d%H%M%S`
 
-/etc/init.d/tomcat6 stop
+/etc/init.d/tomcat7 stop
 
 ##### Copy the jar file into the correct lib directory for D1 Authorization
 cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar /usr/share/solr/WEB-INF/lib
@@ -11,11 +11,11 @@ mv /usr/share/solr/WEB-INF/web.xml /usr/share/solr/WEB-INF/web.xml.bak
 cp /usr/share/dataone-cn-solr/debian/web.xml /usr/share/solr/WEB-INF/
 
 ##### Provide tomcat web app context for solr cores
-cp /usr/share/dataone-cn-solr/debian/d1-cn-index.xml /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
-cp /usr/share/dataone-cn-solr/debian/d1-cn-log.xml /etc/tomcat6/Catalina/localhost/d1-cn-log.xml
+cp /usr/share/dataone-cn-solr/debian/d1-cn-index.xml /etc/tomcat7/Catalina/localhost/d1-cn-index.xml
+cp /usr/share/dataone-cn-solr/debian/d1-cn-log.xml /etc/tomcat7/Catalina/localhost/d1-cn-log.xml
 
-chown -R tomcat6.tomcat6 /etc/tomcat6/Catalina/localhost/d1-cn-index.xml
-chown -R tomcat6.tomcat6 /etc/tomcat6/Catalina/localhost/d1-cn-log.xml
+chown -R tomcat7:tomcat7 /etc/tomcat7/Catalina/localhost/d1-cn-index.xml
+chown -R tomcat7:tomcat7 /etc/tomcat7/Catalina/localhost/d1-cn-log.xml
 
 ####### Provide multi-core solr configuration file.
 mv /usr/share/solr/solr.xml /usr/share/solr/solr.xml.bak
@@ -37,18 +37,18 @@ cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml /usr/share/solr/d1-cn
 
 
 ##### Provide tomcat policy file for solr
-cp /usr/share/dataone-cn-solr/debian/53solr.policy /etc/tomcat6/policy.d/
-chown -R tomcat6.tomcat6 /etc/tomcat6/policy.d/53solr.policy
+cp /usr/share/dataone-cn-solr/debian/53solr.policy /etc/tomcat7/policy.d/
+chown -R tomcat7:tomcat7 /etc/tomcat7/policy.d/53solr.policy
 
-chown -R tomcat6.tomcat6 /etc/solr
-chown -R tomcat6.tomcat6 /usr/share/solr
-chown -R tomcat6.tomcat6 /var/lib/solr
+chown -R tomcat7:tomcat7 /etc/solr
+chown -R tomcat7:tomcat7 /usr/share/solr
+chown -R tomcat7:tomcat7 /var/lib/solr
 
 ######## Update logging solr index schema
 
 mv /usr/share/solr/d1-cn-log/conf/schema.xml /usr/share/solr/d1-cn-log/schema.xml.bak
 cp /usr/share/dataone-cn-solr/debian/log-solr-schema.xml /usr/share/solr/d1-cn-log/conf/schema.xml
-chown -R tomcat6.tomcat6 /usr/share/solr/d1-cn-log/conf/schema.xml
+chown -R tomcat7:tomcat7 /usr/share/solr/d1-cn-log/conf/schema.xml
 
 ####get rid of the examples xslt and add in the d1log.xsl
 rm /usr/share/solr/d1-cn-log/conf/xslt/example*.*
@@ -67,7 +67,7 @@ cp usr/share/dataone-cn-solr/debian/proxy /etc/apache2/conf.d/
 
 ##### Start apache and tomcat
 /etc/init.d/apache2 start
-/etc/init.d/tomcat6 start
+/etc/init.d/tomcat7 start
 
 ## Update DateONE Version Info Doc
 java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html
