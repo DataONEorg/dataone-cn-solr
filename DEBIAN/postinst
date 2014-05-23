@@ -35,6 +35,13 @@ then
 fi
 cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml /usr/share/solr/d1-cn-log/conf/solrconfig.xml
 
+##### Configure log output directory if not there
+if [ ! -d /var/log/dataone/cn ]
+then
+	mkdir /var/log/dataone/cn
+fi
+chown -R tomcat7:tomcat7 /var/log/dataone/cn
+
 
 ##### Provide tomcat policy file for solr
 cp /usr/share/dataone-cn-solr/debian/53solr.policy /etc/tomcat7/policy.d/
