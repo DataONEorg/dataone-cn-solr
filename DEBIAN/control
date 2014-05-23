@@ -3,7 +3,7 @@ Version: 1.3.0
 Section: utils
 Priority: optional
 Architecture: all
-Depends: dataone-cn-os-core, dataone-cn-metacat, openjdk-7-jdk, solr-common7 (= 3.4.0~blubolt2~precise), dataone-cn-solr3-tomcat7, dataone-cn-version-tool
+Depends: dataone-cn-os-core, dataone-cn-metacat, openjdk-7-jdk, solr-common7 (= 3.4.0~blubolt2~precise), solr-tomcat7, dataone-cn-version-tool
 Installed-Size: 1 kb
 Maintainer: Skye Roseboom <sroseboo@dataone.unm.edu>
 Description: This is a metapackage that installs solr-3.4 along with tomcat/solr integration.  Two solr cores are generated as a result of this package - d1-cn-index, d1-cn-log.
