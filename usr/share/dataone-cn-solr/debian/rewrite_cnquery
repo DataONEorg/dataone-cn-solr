@@ -12,8 +12,8 @@
 
   RewriteCond %{REQUEST_METHOD} GET
   RewriteCond %{QUERY_STRING} (.*)$ [NC]
-  RewriteRule ^/cn/v1/query/log/(.*)$  ajp://localhost:8009/solr/d1-cn-log/select/ [QSA,P,L]
+  RewriteRule ^/cn/v1/query/logsolr/(.*)$  ajp://localhost:8009/solr/d1-cn-log/select/ [QSA,P,L]
 
-  RewriteRule ^/cn/v1/query/log$ ajp://localhost:8009/solr/d1-cn-log/queryEngineDescription/?wt=qed [P,L]
+  RewriteRule ^/cn/v1/query/logsolr$ ajp://localhost:8009/solr/d1-cn-log/queryEngineDescription/?wt=qed [P,L]
   
 </IfModule>
