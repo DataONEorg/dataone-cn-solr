@@ -1,82 +1,243 @@
-#!/bin/bash
+#!/bin/bash -x
+
+set -e
+
+#####
+##### Read the commandline options
+##### Only 'configure' is handled with processing, other actions
+##### are ignored for now
+#####
+ACTION=${1}
+ARG_VERSION=${2}
+
+#####
+##### Source the debconf library
+#####
+
+if [ -e "/usr/share/debconf/confmodule" ]; then
+    . /usr/share/debconf/confmodule
+else
+    echo "debconf must be installed. Exiting."
+    exit 1
+fi
 
 LONG_DATE=`date +%Y%m%d%H%M%S`
 
-/etc/init.d/tomcat7 stop
+D1_LOG_DIR=/var/log/dataone
+D1_LOG_FILE=dataone-cn-solr.install.log
+
+#####
+##### log()
+##### append stdout to a logfile
+#####
+function log() 
+{
+	#
+	# Set Up logging
+	# Reminder: don't echo to stdout, it messes up debconf
+	#
+    if [ ! -e ${D1_LOG_DIR} ]; then
+        mkdir -p ${D1_LOG_DIR}
+        chown tomcat7:tomcat7 ${D1_LOG_DIR}
+    fi
+    now=$(date "+%Y-%m-%d %H:%M:%S %Z: ")
+    echo -e "${now} postinst $@" >> ${D1_LOG_DIR}/${D1_LOG_FILE}
+}
+
+if (/etc/init.d/tomcat7 stop >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "/etc/init.d/tomcat7 stop succeeded"
+fi
 
 ##### Copy the jar file into the correct lib directory for D1 Authorization
-cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar /usr/share/solr/WEB-INF/lib
+if (cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar /usr/share/solr/WEB-INF/lib >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar succeeded"
+fi
 
-mv /usr/share/solr/WEB-INF/web.xml /usr/share/solr/WEB-INF/web.xml.bak
-cp /usr/share/dataone-cn-solr/debian/web.xml /usr/share/solr/WEB-INF/
+if (mv /usr/share/solr/WEB-INF/web.xml /usr/share/solr/WEB-INF/web.xml.bak >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "mv /usr/share/solr/WEB-INF/web.xml succeeded"
+fi
+
+if (cp /usr/share/dataone-cn-solr/debian/web.xml /usr/share/solr/WEB-INF/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/web.xml succeeded"
+fi
 
 ##### Provide tomcat web app context for solr cores
-cp /usr/share/dataone-cn-solr/debian/d1-cn-index.xml /etc/tomcat7/Catalina/localhost/d1-cn-index.xml
-cp /usr/share/dataone-cn-solr/debian/d1-cn-log.xml /etc/tomcat7/Catalina/localhost/d1-cn-log.xml
+if (cp /usr/share/dataone-cn-solr/debian/d1-cn-index.xml /etc/tomcat7/Catalina/localhost/d1-cn-index.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/d1-cn-index.xml succeeded"
+fi
 
-chown -R tomcat7:tomcat7 /etc/tomcat7/Catalina/localhost/d1-cn-index.xml
-chown -R tomcat7:tomcat7 /etc/tomcat7/Catalina/localhost/d1-cn-log.xml
+if (cp /usr/share/dataone-cn-solr/debian/d1-cn-log.xml /etc/tomcat7/Catalina/localhost/d1-cn-log.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/d1-cn-log.xml succeeded"
+fi
+
+if (chown -R tomcat7:tomcat7 /etc/tomcat7/Catalina/localhost/d1-cn-index.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "chown -R tomcat7:tomcat7 /etc/tomcat7/Catalina/localhost/d1-cn-index.xml succeeded"
+fi
+
+if (chown -R tomcat7:tomcat7 /etc/tomcat7/Catalina/localhost/d1-cn-log.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "chown -R tomcat7:tomcat7 /etc/tomcat7/Catalina/localhost/d1-cn-log.xml succeeded"
+fi
 
 ####### Provide multi-core solr configuration file.
-mv /usr/share/solr/solr.xml /usr/share/solr/solr.xml.bak
-cp /usr/share/dataone-cn-solr/debian/multicore-solr.xml /usr/share/solr/solr.xml
+
+if (mv /usr/share/solr/solr.xml /usr/share/solr/solr.xml.bak >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "mv /usr/share/solr/solr.xml succeeded"
+fi
+
+if (cp /usr/share/dataone-cn-solr/debian/multicore-solr.xml /usr/share/solr/solr.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/multicore-solr.xml succeeded"
+fi
 
 if [ ! -d /usr/share/solr/d1-cn-index ]
 then
-	mkdir /usr/share/solr/d1-cn-index
-	cp -R /etc/solr/conf /usr/share/solr/d1-cn-index/
-	cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/share/solr/d1-cn-index/conf/solrconfig.xml
+	if (mkdir /usr/share/solr/d1-cn-index >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "mkdir /usr/share/solr/d1-cn-index succeeded"
+    fi
+	
+	if (cp -R /etc/solr/conf /usr/share/solr/d1-cn-index/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp -R /etc/solr/conf succeeded"
+    fi
+	
+	if (cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml /usr/share/solr/d1-cn-index/conf/solrconfig.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/d1-index-solrconfig.xml succeeded"
+    fi
 fi
 
 if [ ! -d /usr/share/solr/d1-cn-log ]
 then
-	mkdir /usr/share/solr/d1-cn-log
-	cp -R /etc/solr/conf /usr/share/solr/d1-cn-log/
+	if (mkdir /usr/share/solr/d1-cn-log >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "mkdir /usr/share/solr/d1-cn-log succeeded"
+    fi
+	if (cp -R /etc/solr/conf /usr/share/solr/d1-cn-log/  >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp -R /etc/solr/conf  succeeded"
+    fi
 fi
-cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml /usr/share/solr/d1-cn-log/conf/solrconfig.xml
+
+if (cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml /usr/share/solr/d1-cn-log/conf/solrconfig.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/d1-log-solrconfig.xml succeeded"
+fi
 
 ##### Configure log output directory if not there
 if [ ! -d /var/log/dataone/cn ]
 then
-	mkdir /var/log/dataone/cn
+	if (mkdir /var/log/dataone/cn >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "mkdir /var/log/dataone/cn succeeded"
+    fi
 fi
-chown -R tomcat7:tomcat7 /var/log/dataone/cn
+
+if (chown -R tomcat7:tomcat7 /var/log/dataone/cn >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "chown -R tomcat7:tomcat7 /var/log/dataone/cn succeeded"
+fi
 
 
 ##### Provide tomcat policy file for solr
-cp /usr/share/dataone-cn-solr/debian/53solr.policy /etc/tomcat7/policy.d/
-chown -R tomcat7:tomcat7 /etc/tomcat7/policy.d/53solr.policy
 
-chown -R tomcat7:tomcat7 /etc/solr
-chown -R tomcat7:tomcat7 /usr/share/solr
-chown -R tomcat7:tomcat7 /var/lib/solr
+if (cp /usr/share/dataone-cn-solr/debian/53solr.policy /etc/tomcat7/policy.d/  >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/53solr.policy succeeded"
+fi
+
+if (chown -R tomcat7:tomcat7 /etc/tomcat7/policy.d/53solr.policy >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "chown -R tomcat7:tomcat7 /etc/tomcat7/policy.d/53solr.policy succeeded"
+fi
+
+
+if (chown -R tomcat7:tomcat7 /etc/solr  >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "chown -R tomcat7:tomcat7 /etc/solr succeeded"
+fi
+
+if (chown -R tomcat7:tomcat7 /usr/share/solr >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "chown -R tomcat7:tomcat7 /usr/share/solr succeeded"
+fi
+
+if (chown -R tomcat7:tomcat7 /var/lib/solr >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "chown -R tomcat7:tomcat7 /var/lib/solr succeeded"
+fi
 
 ######## Update logging solr index schema
 
-mv /usr/share/solr/d1-cn-log/conf/schema.xml /usr/share/solr/d1-cn-log/schema.xml.bak
-cp /usr/share/dataone-cn-solr/debian/log-solr-schema.xml /usr/share/solr/d1-cn-log/conf/schema.xml
-chown -R tomcat7:tomcat7 /usr/share/solr/d1-cn-log/conf/schema.xml
+if ( mv /usr/share/solr/d1-cn-log/conf/schema.xml /usr/share/solr/d1-cn-log/schema.xml.bak ); then
+    log "mv /usr/share/solr/d1-cn-log/conf/schema.xml succeeded"
+fi
+
+if ( cp /usr/share/dataone-cn-solr/debian/log-solr-schema.xml /usr/share/solr/d1-cn-log/conf/schema.xml ); then
+    log "cp /usr/share/dataone-cn-solr/debian/log-solr-schema.xml succeeded"
+fi
+
+if ( chown -R tomcat7:tomcat7 /usr/share/solr/d1-cn-log/conf/schema.xml ); then
+    log "chown -R tomcat7:tomcat7 /usr/share/solr/d1-cn-log/conf/schema.xml succeeded"
+fi
 
 ####get rid of the examples xslt and add in the d1log.xsl
-rm /usr/share/solr/d1-cn-log/conf/xslt/example*.*
-cp /usr/share/dataone-cn-solr/debian/d1log.xsl /usr/share/solr/d1-cn-log/conf/xslt/
+if [ -e /usr/share/solr/d1-cn-log/conf/xslt/example*.*  ]; then
+  if ( rm /usr/share/solr/d1-cn-log/conf/xslt/example*.* >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log ""removed /usr/share/solr/d1-cn-log/conf/xslt/example*.*""
+  fi
+fi
+
+
+if ( cp /usr/share/dataone-cn-solr/debian/d1log.xsl /usr/share/solr/d1-cn-log/conf/xslt/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/d1log.xsl succeeded"
+fi
 
 ###### Configure Apache
-/etc/init.d/apache2 stop
+
+if ( /etc/init.d/apache2 stop >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "/etc/init.d/apache2 stop succeeded"
+fi
 
 ##cp usr/share/dataone-cn-solr/debian/solr_jk.conf /etc/apache2/jk_mount/
 
-cp usr/share/dataone-cn-solr/debian/rewrite_cnlog /etc/apache2/conf.d/
-cp usr/share/dataone-cn-solr/debian/rewrite_cnsearch /etc/apache2/conf.d/
-cp usr/share/dataone-cn-solr/debian/rewrite_cnquery /etc/apache2/conf.d/
+if ( cp /usr/share/dataone-cn-solr/debian/rewrite_cnlog /etc/apache2/conf.d >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/rewrite_cnlog succeeded"
+fi
 
-cp usr/share/dataone-cn-solr/debian/proxy /etc/apache2/conf.d/
+if ( cp /usr/share/dataone-cn-solr/debian/rewrite_cnsearch /etc/apache2/conf.d >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/rewrite_cnsearch succeeded"
+fi
+
+if ( cp /usr/share/dataone-cn-solr/debian/rewrite_cnquery /etc/apache2/conf.d >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/rewrite_cnquery succeeded"
+fi
+
+if ( cp /usr/share/dataone-cn-solr/debian/proxy /etc/apache2/conf.d/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "p /usr/share/dataone-cn-solr/debian/proxy succeeded"
+fi
+
+if ( cp /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost /etc/apache2/conf.d/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost succeeded"
+fi
+
+db_get dataone-cn-os-core/cn.ipaddress 
+IP_ADDRESS=$RET
+
+IP_ADDRESS=${IP_ADDRESS//./\\.}
+
+REGEX_REMOTE_ADDR="(?:$IP_ADDRESS)|(?:128\.111\.54\.108)|(?:128\.111\.220\.\d+)"
+
+log ${REGEX_REMOTE_ADDR}
+
+if ! (sed -i.bak  "s/REMOTE_ADDRESS_REGEX/${REGEX_REMOTE_ADDR}/" /etc/apache2/conf.d/rewrite_cnlog_localhost >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
+  log "Error Unable to modify REGEX_REMOTE_ADDR in /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost"
+else
+  if ( rm /etc/apache2/conf.d/rewrite_cnlog_localhost.bak >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "rm /etc/apache2/conf.d/rewrite_cnlog_localhost.bak succeeded"
+  fi
+fi
+
 
 ##### Start apache and tomcat
-/etc/init.d/apache2 start
-/etc/init.d/tomcat7 start
+
+if ( /etc/init.d/apache2 start >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "/etc/init.d/apache2 start succeeded"
+fi
+
+if ( /etc/init.d/tomcat7 start >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "/etc/init.d/tomcat7 start succeeded"
+fi
 
 ## Update DateONE Version Info Doc
-java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html
-
+if ( java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html  2>/dev/null ); then
+    log "ataone-cn-version-tool.jar succeeded"
+  fi
+db_stop
 exit 0

@@ -1,23 +1,90 @@
-#!/bin/bash
+#!/bin/bash -x
 
-/etc/init.d/tomcat7 stop
-/etc/init.d/apache2 stop
+set -e
+
+#####
+##### Read the commandline options
+##### Only 'configure' is handled with processing, other actions
+##### are ignored for now
+#####
+ACTION=${1}
+ARG_VERSION=${2}
+#####
+##### Source the debconf library
+#####
+
+if [ -e "/usr/share/debconf/confmodule" ]; then
+    . /usr/share/debconf/confmodule
+else
+    echo "debconf must be installed. Exiting."
+    exit 1
+fi
+
+LONG_DATE=`date +%Y%m%d%H%M%S`
+
+D1_LOG_DIR=/var/log/dataone
+D1_LOG_FILE=dataone-cn-solr.remove.log
+
+#####
+##### log()
+##### append stdout to a logfile
+#####
+function log() 
+{
+	#
+	# Set Up logging
+	# Reminder: don't echo to stdout, it messes up debconf
+	#
+    if [ ! -e ${D1_LOG_DIR} ]; then
+        mkdir -p ${D1_LOG_DIR}
+        chown tomcat7:tomcat7 ${D1_LOG_DIR}
+    fi
+    now=$(date "+%Y-%m-%d %H:%M:%S %Z: ")
+    echo -e "${now} postinst $@" >> ${D1_LOG_DIR}/${D1_LOG_FILE}
+}
+
+if (/etc/init.d/tomcat7 stop >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "/etc/init.d/tomcat7 stop succeeded"
+fi
+
+if (/etc/init.d/apache2 stop >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "/etc/init.d/apache2 stop succeeded"
+fi
 
 ###### Remove tomcat web app config
-rm /etc/tomcat7/Catalina/localhost/d1-cn-index.xml
-rm /etc/tomcat7/Catalina/localhost/d1-cn-log.xml
+
+if (rm /etc/tomcat7/Catalina/localhost/d1-cn-index.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "rm /etc/tomcat7/Catalina/localhost/d1-cn-index.xml succeeded"
+fi
+
+if (rm /etc/tomcat7/Catalina/localhost/d1-cn-log.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "rm /etc/tomcat7/Catalina/localhost/d1-cn-log.xml succeeded"
+fi
 
 ##### Restore original solr.xml config
-mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml
+if (mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "mv /usr/share/solr/solr.xml.bak succeeded"
+fi
 
-rm -f /etc/tomcat7/policy.d/53solr.policy
+if (rm -f /etc/tomcat7/policy.d/53solr.policy >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "rm -f /etc/tomcat7/policy.d/53solr.policy succeeded"
+fi
 
-rm -f /etc/apache2/jk_mount/solr_jk.*
+if (rm -f /etc/apache2/jk_mount/solr_jk.* >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "rm -f /etc/apache2/jk_mount/solr_jk.* succeeded"
+fi
 
-/etc/init.d/apache2 start
-/etc/init.d/tomcat7 start
+if (/etc/init.d/apache2 start >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "/etc/init.d/apache2 start succeeded"
+fi
+if (/etc/init.d/tomcat7 start >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "/etc/init.d/tomcat7 start succeeded"
+fi
 
 ## Update DateONE Version Info Doc
-java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html
+if (java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html 2>/dev/null ); then
+    log "dataone-cn-version-tool succeeded"
+fi
 
+db_stop
 exit 0
