@@ -203,26 +203,27 @@ if ( cp /usr/share/dataone-cn-solr/debian/proxy /etc/apache2/conf.d/ >> ${D1_LOG
     log "p /usr/share/dataone-cn-solr/debian/proxy succeeded"
 fi
 
-if ( cp /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost /etc/apache2/conf.d/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "cp /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost succeeded"
-fi
-
-db_get dataone-cn-os-core/cn.ipaddress 
-IP_ADDRESS=$RET
-
-IP_ADDRESS=${IP_ADDRESS//./\\.}
-
-REGEX_REMOTE_ADDR="(?:$IP_ADDRESS)|(?:128\.111\.54\.108)|(?:128\.111\.220\.\d+)"
-
-log ${REGEX_REMOTE_ADDR}
-
-if ! (sed -i.bak  "s/REMOTE_ADDRESS_REGEX/${REGEX_REMOTE_ADDR}/" /etc/apache2/conf.d/rewrite_cnlog_localhost >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
-  log "Error Unable to modify REGEX_REMOTE_ADDR in /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost"
-else
-  if ( rm /etc/apache2/conf.d/rewrite_cnlog_localhost.bak >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "rm /etc/apache2/conf.d/rewrite_cnlog_localhost.bak succeeded"
+if [ -e /etc/apache2/conf.d/rewrite_cnlog_localhost ]; then
+  if ( rm /etc/apache2/conf.d/rewrite_cnlog_localhost >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "remove /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost succeeded"
   fi
 fi
+#db_get dataone-cn-os-core/cn.ipaddress 
+#IP_ADDRESS=$RET
+
+#IP_ADDRESS=${IP_ADDRESS//./\\.}
+
+#REGEX_REMOTE_ADDR="(?:$IP_ADDRESS)|(?:128\.111\.54\.108)|(?:128\.111\.220\.\d+)"
+
+#log ${REGEX_REMOTE_ADDR}
+
+#if ! (sed -i.bak  "s/REMOTE_ADDRESS_REGEX/${REGEX_REMOTE_ADDR}/" /etc/apache2/conf.d/rewrite_cnlog_localhost >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
+  #log "Error Unable to modify REGEX_REMOTE_ADDR in /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost"
+#else
+  #if ( rm /etc/apache2/conf.d/rewrite_cnlog_localhost.bak >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    #log "rm /etc/apache2/conf.d/rewrite_cnlog_localhost.bak succeeded"
+  #fi
+#fi
 
 
 ##### Start apache and tomcat
