@@ -281,6 +281,7 @@
 
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="dateAggregated" type="date" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="dateUpdated" type="date" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="isPublic"          type="boolean"  indexed="true" stored="true" multiValued="false"/>
    <field name="readPermission"    type="string"   indexed="true" stored="true" multiValued="true"/>
    <field name="entryId" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
@@ -289,7 +290,7 @@
    <field name="userAgent" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="subject" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="event" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="dateLogged" type="date" indexed="true" stored="true" required="true" multiValued="false"/> 
+   <field name="dateLogged" type="date" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="nodeId" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="rightsHolder" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
    <field name="formatId" type="string" indexed="true" stored="true" required="false" multiValued="false"/>
