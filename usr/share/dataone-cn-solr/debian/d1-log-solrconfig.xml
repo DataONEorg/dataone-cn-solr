@@ -767,7 +767,10 @@
        </arr>
       -->
     </requestHandler>
-
+    
+	<requestHandler name="/queryEngineDescription" class="org.dataone.solr.handler.LogSolrQueryEngineDescriptionHandler" default="false">
+	</requestHandler>
+	
   <!-- A Robust Example
 
        This example SearchHandler declaration shows off usage of the
