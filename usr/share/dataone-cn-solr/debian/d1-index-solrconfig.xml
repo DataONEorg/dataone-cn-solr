@@ -1375,7 +1375,7 @@
   <!--
      <queryResponseWriter name="custom" class="com.example.MyResponseWriter"/>
     -->
-    <queryResponseWriter name="qed" class="org.dataone.solr.response.QueryEngineDescriptionResponseWriter"/>
+    <queryResponseWriter name="qed" class="org.dataone.solr.response.SolrQueryEngineDescriptionResponseWriter"/>
 
   <!-- XSLT response writer transforms the XML output by any xslt file found
        in Solr's conf/xslt directory.  Changes to xslt files are checked for

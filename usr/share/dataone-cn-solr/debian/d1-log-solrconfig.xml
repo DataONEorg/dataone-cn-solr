@@ -768,8 +768,8 @@
       -->
     </requestHandler>
     
-	<requestHandler name="/queryEngineDescription" class="org.dataone.solr.handler.LogSolrQueryEngineDescriptionHandler" default="false">
-	</requestHandler>
+		<requestHandler name="/queryEngineDescription" class="org.dataone.solr.handler.LogSolrQueryEngineDescriptionHandler" default="false">
+	  </requestHandler>
 	
   <!-- A Robust Example
 
@@ -1351,12 +1351,17 @@
   <!--
      <queryResponseWriter name="custom" class="com.example.MyResponseWriter"/>
     -->
+    
+    <queryResponseWriter name="qed" class="org.dataone.solr.response.LogSolrQueryEngineDescriptionResponseWriter"/>
+    
 
   <!-- XSLT response writer transforms the XML output by any xslt file found
        in Solr's conf/xslt directory.  Changes to xslt files are checked for
        every xsltCacheLifetimeSeconds.  
     -->
+  <!-- 
   <queryResponseWriter default="true" name="xml" class="solr.XMLResponseWriter" />  
+  -->
   <queryResponseWriter name="xslt" class="solr.XSLTResponseWriter">
     <int name="xsltCacheLifetimeSeconds">60</int>
   </queryResponseWriter>
