@@ -1,0 +1,11 @@
+# A sample proxy configuration for solr cloud, not ready for production - allows access to /solr4/admin
+ProxyPreserveHost On
+ProxyPass /solr4 http://localhost:8983/solr4
+
+<LocationMatch /solr4/search-core/(admin|update|get|replication)>
+    Order Deny,Allow
+    Deny from all
+    Allow from D1_CN_IP_1
+    Allow from D1_CN_IP_2
+    Allow from D1_CN_IP_3
+</LocationMatch>

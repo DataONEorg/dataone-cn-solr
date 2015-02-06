@@ -44,6 +44,7 @@ function log()
     echo -e "${now} postinst $@" >> ${D1_LOG_DIR}/${D1_LOG_FILE}
 }
 
+
 if (/etc/init.d/tomcat7 stop >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
     log "/etc/init.d/tomcat7 stop succeeded"
 fi
@@ -247,9 +248,80 @@ if ( /etc/init.d/tomcat7 start >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
     log "/etc/init.d/tomcat7 start succeeded"
 fi
 
+
+## SOLR 4 INSTALL
+
+SOLR4_INSTALL_DIR=/var/solr/
+SOLR4_HOME=${SOLR4_INSTALL_DIR}home/
+SOLR4_SEARCH_CORE=${SOLR4_HOME}search_core/
+SOLR4_LOG_CORE=${SOLR4_HOME}log_core/
+JETTY_USER=tomcat7
+
+echo
+echo 'solr install: ' ${SOLR4_INSTALL_DIR}
+echo 'solr home: ' ${SOLR4_HOME}
+echo 'solr search core: ' ${SOLR4_SEARCH_CORE}
+echo 'solr log core: ' ${SOLR4_LOG_CORE}
+echo
+
+#install for solr4 usage
+if [ -e ${SOLR4_INSTALL_DIR} ]; then
+  echo 'solr4 installed'
+
+  echo 'providing solr.xml file for solr home'
+  #cp /usr/share/dataone-cn-solr/debian/solr4/solr.xml ${SOLR4_HOME}
+
+  if [ ! -e "/var/solr/home/search_core" ]; then
+    echo 'solr4 search core not installed, creating...'
+    mkdir ${SOLR4_SEARCH_CORE}
+    cp -r ${SOLR4_INSTALL_DIR}example/core-template/core0/* ${SOLR4_SEARCH_CORE}
+    cp /usr/share/dataone-cn-solr/debian/solr4/search-core.properties ${SOLR4_SEARCH_CORE}core.properties
+  else
+   echo 'solr4 search core installed, skipping core creation'
+  fi
+
+  if [ ! -e "/var/solr/home/log_core" ]; then
+    echo 'solr4 log core is not installed, creating...'
+    mkdir ${SOLR4_LOG_CORE}
+    cp -r ${SOLR4_INSTALL_DIR}example/core-template/core0/* ${SOLR4_LOG_CORE}
+    cp /usr/share/dataone-cn-solr/debian/solr4/log-core.properties ${SOLR4_LOG_CORE}core.properties
+  else
+    echo 'solr4 log core installed, skipping core creation'
+  fi
+
+  echo 'copying search core schema and solrconfig to '${SOLR4_SEARCH_CORE}'conf...'
+  cp /usr/share/dataone-cn-solr/debian/solr4/search-core-schema.xml ${SOLR4_SEARCH_CORE}conf/schema.xml
+  cp /usr/share/dataone-cn-solr/debian/solr4/search-core-solrconfig.xml ${SOLR4_SEARCH_CORE}conf/solrconfig.xml
+  cp /usr/share/dataone-cn-solr/debian/solr4/d1search.xsl ${SOLR4_SEARCH_CORE}conf/xslt/
+
+  echo 'copying log core schema and solrconfig to '${SOLR4_LOG_CORE}'conf...'
+  cp /usr/share/dataone-cn-solr/debian/solr4/log-core-schema.xml ${SOLR4_LOG_CORE}conf/schema.xml
+  cp /usr/share/dataone-cn-solr/debian/solr4/log-core-solrconfig.xml ${SOLR4_LOG_CORE}conf/solrconfig.xml
+
+  chown -R ${JETTY_USER}.${JETTY_USER} ${SOLR4_INSTALL_DIR}
+
+  echo 'restarting jetty...'
+  #/etc/init.d/jetty restart
+
+  echo 'copying apache proxy to /etc/apache2/conf.d'
+  cp /usr/share/dataone-cn-solr/debian/solr4/solr4-proxy /etc/apache2/conf.d/
+  cp /usr/share/dataone-cn-solr/debian/solr4/rewrite_cnquery-override /etc/apache2/conf.d/rewrite_cnquery
+  chown -R ${JETTY_USER}.${JETTY_USER} /etc/apache2/conf.d/
+
+  echo 'restarting apache...'
+  /etc/init.d/apache2 restart
+
+else
+  echo 'solr4 not installed - skipping solr4 config installation'
+fi
+
+## END WITH SOLR 4 INSTALL
+
+
+
 ## Update DateONE Version Info Doc
 if ( java -jar /usr/share/dataone-cn-version-tool/dataone-cn-version-tool.jar -F/usr/share/dataone-cn-version-tool/version-tool.properties -html > /var/www/cn-version.html  2>/dev/null ); then
     log "ataone-cn-version-tool.jar succeeded"
-  fi
+fi
 db_stop
 exit 0
