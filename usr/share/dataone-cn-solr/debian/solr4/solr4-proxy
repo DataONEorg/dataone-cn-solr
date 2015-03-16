@@ -3,6 +3,8 @@
 
 ProxyPreserveHost On
 ProxyPass /cn/v1/query/solr/ http://localhost:8983/solr4/search_core/select/
+ProxyPass /cn/v2/query/solr/ http://localhost:8983/solr4/search_core/select/
+
 
 #ProxyPass /cn/v1/search/solr/  http://localhost:8983/solr4/search_core/select/?wt=xslt&tr=d1search.xsl&fl=id,size,formatId,checksum,checksumAlgorithm,dateModified
 #ProxyPass /cn/v1/query/solr http://localhost:8983/solr4/search_core/queryEngineDescription/?wt=qed
