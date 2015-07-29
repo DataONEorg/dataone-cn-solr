@@ -4,6 +4,6 @@
   RewriteLog /var/log/apache2/rewrite.log
   RewriteLogLevel 1
 
-  RewriteRule ^/cn/v1/search/solr/?  ajp://localhost:8009/solr/d1-cn-index/select/?wt=xslt&tr=d1search.xsl&fl=id,size,formatId,checksum,checksumAlgorithm,dateModified [QSA,P]
+  #RewriteRule ^/cn/v1/search/solr/?  ajp://localhost:8009/solr/d1-cn-index/select/?wt=xslt&tr=d1search.xsl&fl=id,size,formatId,checksum,checksumAlgorithm,dateModified [QSA,P]
 
 </IfModule>
