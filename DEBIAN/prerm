@@ -43,27 +43,12 @@ function log()
     echo -e "${now} postinst $@" >> ${D1_LOG_DIR}/${D1_LOG_FILE}
 }
 
-if (/etc/init.d/tomcat7 stop >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "/etc/init.d/tomcat7 stop succeeded"
-fi
-
-if (/etc/init.d/apache2 stop >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "/etc/init.d/apache2 stop succeeded"
-fi
-
-###### Remove tomcat web app config
-
 if (rm /etc/tomcat7/Catalina/localhost/d1-cn-index.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
     log "rm /etc/tomcat7/Catalina/localhost/d1-cn-index.xml succeeded"
 fi
 
 if (rm /etc/tomcat7/Catalina/localhost/d1-cn-log.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
     log "rm /etc/tomcat7/Catalina/localhost/d1-cn-log.xml succeeded"
-fi
-
-##### Restore original solr.xml config
-if (mv /usr/share/solr/solr.xml.bak /usr/share/solr/solr.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "mv /usr/share/solr/solr.xml.bak succeeded"
 fi
 
 if (rm -f /etc/tomcat7/policy.d/53solr.policy >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
@@ -75,10 +60,7 @@ if (rm -f /etc/apache2/jk_mount/solr_jk.* >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 )
 fi
 
 if (/etc/init.d/apache2 start >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "/etc/init.d/apache2 start succeeded"
-fi
-if (/etc/init.d/tomcat7 start >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "/etc/init.d/tomcat7 start succeeded"
+    log "/etc/init.d/apache2 restart succeeded"
 fi
 
 ## Update DateONE Version Info Doc
