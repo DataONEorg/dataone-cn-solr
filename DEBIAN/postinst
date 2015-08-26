@@ -49,7 +49,7 @@ SOLR_USER=tomcat7
 SOLR_ROOT=/var/solr
 SOLR_HOME=${SOLR_ROOT}/server/solr
 SEARCH_CONFIGS_DIR=${SOLR_HOME}/configsets/dataone_search_configs/
-EVENT_LOG_CONFIGS_DIR=${SOLR_HOME/configsets/dataone_event_log_configs/
+EVENT_LOG_CONFIGS_DIR=${SOLR_HOME}/configsets/dataone_event_log_configs/
 SOLR_SERVER_PORT=8983
 
 SEARCH_CORE_NAME=search_core
