@@ -159,7 +159,7 @@ fi
 
 ##### Configure zookeeper server configuration
 mv ${ZK_CONF_HOME}/zoo.cfg ${ZK_CONF_HOME}/zoo.cfg.bak
-cp /usr/share/dataone-cn-audit-index/debian/server_configs/zoo.cfg ${ZK_CONF_HOME}/zoo.cfg
+cp /usr/share/dataone-cn-solr/debian/server_configs/zoo.cfg ${ZK_CONF_HOME}/zoo.cfg
 
 if ! (sed -i "s/$SERVER_1_TOKEN/$SERVER_1/g" ${ZK_CONF_HOME}/zoo.cfg >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
 	log "Unable to modify ${ZK_CONF_HOME}/zoo.cfg for $SERVER_1_TOKEN $SERVER_1"
