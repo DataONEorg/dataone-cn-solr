@@ -118,7 +118,7 @@ if [ ! -d "$SEARCH_CONFIGS_DIR" ]; then
 	mkdir ${SEARCH_CONFIGS_DIR}
 fi
 
-cp -rf /usr/share/dataone-cn-index/dataone_search_configs/* ${SEARCH_CONFIGS_DIR}
+cp -rf /usr/share/dataone-cn-index/debian/dataone_search_configs/* ${SEARCH_CONFIGS_DIR}
 chown -R ${SOLR_USER}:${SOLR_USER} ${SEARCH_CONFIGS_DIR}
 
 cp /usr/share/dataone-cn-index/dataone_search_configs/conf/schema.xml /etc/dataone/index/schema.xml
