@@ -100,7 +100,7 @@ done
 
 ### Substitute server IP and PORT numbers in config files at token locations
 ##### Configure apache mod proxy for to allow solr communication between CN nodes
-#cp /usr/share/dataone-cn-index/debian/modproxy_cnaudit ${APACHE_CONF_HOME}/modproxy_cnaudit
+#cp /usr/share/dataone-cn-solr/debian/modproxy_cnaudit ${APACHE_CONF_HOME}/modproxy_cnaudit
 #if ! (sed -i "s/$SERVER_1_TOKEN/$SERVER_1/g" ${APACHE_CONF_HOME}/modproxy_cnaudit >> ${D1_LOG_DIR}/${D1_LOG_FILE}  2>&1); then
 #	log "unable to set $SERVER_1 in modproxy_cnaudit"
 #fi
@@ -119,12 +119,10 @@ if [ ! -d "$SEARCH_CONFIGS_DIR" ]; then
 fi
 
 
-log "debug directory usr/share/dataone-cn-index/debian/dataone_search_configs/*"
-
-cp -rf /usr/share/dataone-cn-index/debian/dataone_search_configs/* ${SEARCH_CONFIGS_DIR}
+cp -rf /usr/share/dataone-cn-solr/debian/dataone_search_configs/* ${SEARCH_CONFIGS_DIR}
 chown -R ${SOLR_USER}:${SOLR_USER} ${SEARCH_CONFIGS_DIR}
 
-cp /usr/share/dataone-cn-index/debian/dataone_search_configs/conf/schema.xml /etc/dataone/index/schema.xml
+cp /usr/share/dataone-cn-solr/debian/dataone_search_configs/conf/schema.xml /etc/dataone/index/schema.xml
 chown ${SOLR_USER}:${SOLR_USER} /etc/dataone/index/schema.xml
 
 # Copy event log core configuration
@@ -133,12 +131,12 @@ if [ ! -d "$EVENT_LOG_CONFIGS_DIR" ]; then
 	mkdir ${EVENT_LOG_CONFIGS_DIR}
 fi
 
-cp -rf /usr/share/dataone-cn-index/debian/dataone_event_log_configs/* ${EVENT_LOG_CONFIGS_DIR}
+cp -rf /usr/share/dataone-cn-solr/debian/dataone_event_log_configs/* ${EVENT_LOG_CONFIGS_DIR}
 chown -R ${SOLR_USER}:${SOLR_USER} ${EVENT_LOG_CONFIGS_DIR}
 
 
-cp /usr/share/dataone-cn-index/debian/server_configs/solr.in.sh ${SOLR_ROOT}/
-cp /usr/share/dataone-cn-index/debian/server_configs/solr /etc/init.d/
+cp /usr/share/dataone-cn-solr/debian/server_configs/solr.in.sh ${SOLR_ROOT}/
+cp /usr/share/dataone-cn-solr/debian/server_configs/solr /etc/init.d/
 chmod 755 /etc/init.d/solr
 update-rc.d solr defaults
 update-rc.d solr enable
