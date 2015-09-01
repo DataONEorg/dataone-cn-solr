@@ -1,7 +1,7 @@
 RewriteEngine On
 
 RewriteRule ^/cn/v1/search/solr/?  http://localhost:8983/solr/search_core/select/?wt=xslt&tr=d1search.xsl&fl=id,size,formatId,checksum,checksumAlgorithm,dateModified [QSA,P]
-RewriteRule ^/cn/v2/search/solr/?  http://localhost:8983/solr/search_core/select/?wt=xslt&tr=d1search.xsl&fl=id,size,formatId,checksum,checksumAlgorithm,dateModified [QSA,P]
+RewriteRule ^/cn/v2/search/solr/?  http://localhost:8983/solr/search_core/select/?wt=xslt&tr=d1search_v2.xsl&fl=id,size,formatId,checksum,checksumAlgorithm,dateModified [QSA,P]
 
 RewriteRule ^/cn/v1/query/solr$ http://localhost:8983/solr/search_core/queryEngineDescription/?wt=qed [P,L]
 RewriteRule ^/cn/v2/query/solr$ http://localhost:8983/solr/search_core/queryEngineDescription/?wt=qed [P,L]
