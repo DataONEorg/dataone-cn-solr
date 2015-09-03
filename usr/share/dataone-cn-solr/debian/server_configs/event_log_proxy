@@ -79,7 +79,7 @@ RewriteRule ^/cn/v2/log/?  http://localhost:8983/solr/event_core/select/?q=entry
 ### REWRITES FOR V2
 RewriteCond %{REQUEST_URI} ^/cn/v2/log/?$
 RewriteCond %{QUERY_STRING} !^.+$
-RewriteRule ^/cn/v2/log/?  http://localhost:8983/solr/event_core/select/?q=entryId:[*+TO+*]&start=0&rows=1000&wt=xslt&tr=d1log.xsl [P]
+RewriteRule ^/cn/v2/log/?  http://localhost:8983/solr/event_core/select/?q=entryId:[*+TO+*]&start=0&rows=1000&wt=xslt&tr=d1log_v2.xsl [P]
 
 
 # GET the date query right
@@ -135,7 +135,7 @@ RewriteRule ^/cn/v2/log/?  http://localhost:8983/solr/event_core/select/?q=entry
   RewriteRule ^/cn/v2/log/? /cn/v2/log/?%1
    
   RewriteCond %{QUERY_STRING} ^(q=.*)$
-  RewriteRule ^/cn/v2/log/? http://localhost:8983/solr/event_core/select/?&wt=xslt&tr=d1log.xsl [QSA,P]
+  RewriteRule ^/cn/v2/log/? http://localhost:8983/solr/event_core/select/?&wt=xslt&tr=d1log_v2.xsl [QSA,P]
 
   	
 </IfModule>
