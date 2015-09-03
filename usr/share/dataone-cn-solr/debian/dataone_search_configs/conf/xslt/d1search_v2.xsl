@@ -39,9 +39,9 @@
   	<xsl:processing-instruction name="xml-stylesheet">
   		<xsl:text>href="/cn/xslt/dataone.types.v2.xsl" type="text/xsl"</xsl:text>
 	</xsl:processing-instruction>
-    <d1:objectList xmlns:d1="http://ns.dataone.org/service/types/v2" count="{$nrecs}" start="{$start}" total="{$nfound}"> 
+    <d1_v2.0:objectList xmlns:d1_v2.0="http://ns.dataone.org/service/types/v2.0" xmlns:d1="http://ns.dataone.org/service/types/v1" count="{$nrecs}" start="{$start}" total="{$nfound}"> 
         <xsl:apply-templates select="response/result/doc"/>
-    </d1:objectList>
+    </d1_v2.0:objectList>
   </xsl:template>
   
   <xsl:template match="doc">
