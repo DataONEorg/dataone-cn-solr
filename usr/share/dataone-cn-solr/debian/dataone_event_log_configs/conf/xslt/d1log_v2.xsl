@@ -37,9 +37,9 @@
   <xsl:variable name="nrecs" select="count(response/result/doc)" />
   
   <xsl:template match='/'>
-    <d1:log xmlns:d1="http://ns.dataone.org/service/types/v2" count="{$nrecs}" start="{$start}" total="{$nfound}"> 
+    <d1_v2.0:log xmlns:d1_v2.0="http://ns.dataone.org/service/types/v2.0" xmlns:d1="http://ns.dataone.org/service/types/v1" count="{$nrecs}" start="{$start}" total="{$nfound}"> 
         <xsl:apply-templates select="response/result/doc"/>
-    </d1:log>
+    </d1_v2.0:log>
   </xsl:template>
   
   <xsl:template match="doc">
