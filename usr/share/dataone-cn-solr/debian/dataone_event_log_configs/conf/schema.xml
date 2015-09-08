@@ -152,7 +152,7 @@
    <field name="location"  type="location" indexed="true" stored="true" multiValued="false"/>
    <field name="robotLevel" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <field name="repeatVisit" type="boolean" indexed="true" stored="true" required="true" multiValued="false"/>
-
+<field name="d1_version_compliance" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
    <!-- Dynamic field definitions allow using convention over configuration
        for fields via the specification of patterns to match field names. 
        EXAMPLE:  name="*_i" will match any field ending in _i (like myid_i, z_i)
