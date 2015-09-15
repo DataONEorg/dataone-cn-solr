@@ -125,9 +125,17 @@ if [ -e /etc/apache2/conf.d/rewrite_cnlog_localhost ]; then
   fi
 fi
 
-rm /etc/apache2/conf.d/rewrite_cnlog
-rm /etc/apache2/conf.d/rewrite_cnquery
-rm /etc/apache2/conf.d/rewrite_cnsearch
+if [ -e /etc/apache2/conf.d/rewrite_cnlog ]; then
+	rm /etc/apache2/conf.d/rewrite_cnlog
+fi
+
+if [ -e /etc/apache2/conf.d/rewrite_cnquery ]; then
+	rm /etc/apache2/conf.d/rewrite_cnquery
+fi
+
+if [ -e /etc/apache2/conf.d/rewrite_cnsearch ]; then
+	rm /etc/apache2/conf.d/rewrite_cnsearch
+fi
 
 /etc/init.d/apache2 restart
 
