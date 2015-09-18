@@ -144,6 +144,10 @@ if (cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar ${SOLR_ROOT}/server/lib
     log "cp ${SOLR_ROOT}/server/lib/d1_solr_extensions.jar succeeded"
 fi
 
+if (cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar ${SOLR_ROOT}/server/solr-webapp/webapp/WEB-INF/lib/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp ${SOLR_ROOT}/server/solr-webapp/webapp/WEB-INF/lib/d1_solr_extensions.jar succeeded"
+fi
+
 #### COPY A web.xml that configures authentication filters
 #### MAKE THIS WORK WITH JETTY
 if (mv /var/solr/server/solr-webapp/webapp/WEB-INF/web.xml /var/solr/server/solr-webapp/webapp/WEB-INF/web.xml.bak >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
