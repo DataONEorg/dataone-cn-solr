@@ -140,8 +140,8 @@ fi
 /etc/init.d/apache2 restart
 
 ##### Copy the jar file into the correct lib directory for D1 Authorization
-if (cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar ${SOLR_ROOT}/server/solr/lib/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "cp ${SOLR_ROOT}/server/solr/lib/d1_solr_extensions.jar succeeded"
+if (cp /usr/share/dataone-cn-solr/d1_solr_extensions.jar ${SOLR_ROOT}/server/lib/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "cp ${SOLR_ROOT}/server/lib/d1_solr_extensions.jar succeeded"
 fi
 
 #### COPY A web.xml that configures authentication filters
