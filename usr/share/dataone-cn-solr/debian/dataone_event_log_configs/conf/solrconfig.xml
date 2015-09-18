@@ -783,7 +783,7 @@
 <!--
 <requestHandler name="search" class="org.dataone.solr.handler.component.SolrLoggingHandler">
 -->  
-  <requestHandler name="/select" class="solr.SearchHandler">
+  <requestHandler name="/select" class="org.dataone.solr.handler.component.SolrLoggingHandler">
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
       -->
