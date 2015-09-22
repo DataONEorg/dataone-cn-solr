@@ -787,6 +787,9 @@
      </lst>
     </requestHandler>
 
+	<requestHandler name="/queryEngineDescription" class="org.dataone.solr.handler.LogSolrQueryEngineDescriptionHandler" default="false">
+	</requestHandler>
+
   <requestHandler name="/select" class="solr.SearchHandler">
      <lst name="defaults">
        <str name="echoParams">explicit</str>
@@ -946,6 +949,8 @@
   <admin>
     <defaultQuery>*:*</defaultQuery>
   </admin>
+
+	<queryResponseWriter name="qed" class="org.dataone.solr.response.LogSolrQueryEngineDescriptionResponseWriter"/>
 
 	<queryResponseWriter name="xslt" class="org.apache.solr.response.XSLTResponseWriter">
   		<int name="xsltCacheLifetimeSeconds">20</int>
