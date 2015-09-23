@@ -166,7 +166,7 @@ if [ -z "$FRESH_SEARCH_CORE_INSTALL" ]; then
 	if ! (${SOLR_ROOT}/server/scripts/cloud-scripts/zkcli.sh -cmd upconfig -z localhost:2181 -confname ${SEARCH_CORE_NAME} -confdir ${SEARCH_CONFIGS_DIR}conf/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
 		log "UPDATE of $SEARCH_CORE_NAME config failed"
 	fi
-	if ! (curl "http://localhost:8983/solr/admin/cores?action=RELOAD&core=$SEARCH_CORE_NAME" >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
+	if ! (curl "http://localhost:8983/solr/admin/collections?action=RELOAD&name=$SEARCH_CORE_NAME" >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
 		log "RELOAD of $SEARCH_CORE_NAME failed"
 	fi	
 else
@@ -179,7 +179,7 @@ if [ -z "$FRESH_EVENT_LOG_CORE_INSTALL" ]; then
     if ! (${SOLR_ROOT}/server/scripts/cloud-scripts/zkcli.sh -cmd upconfig -z localhost:2181 -confname ${EVENT_LOG_CORE_NAME} -confdir ${EVENT_LOG_CONFIGS_DIR}conf/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
 		log "UPDATE of $EVENT_LOG_CORE_NAME config failed"
 	fi
-	if ! (curl "http://localhost:8983/solr/admin/cores?action=RELOAD&core=$EVENT_LOG_CORE_NAME" >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
+	if ! (curl "http://localhost:8983/solr/admin/collections?action=RELOAD&name=$EVENT_LOG_CORE_NAME" >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1); then
 		log "RELOAD of $EVENT_LOG_CORE_NAME failed"
 	fi
 else
