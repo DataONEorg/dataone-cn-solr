@@ -52,7 +52,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>D1LogSolrAuthorizationFilter</filter-name>
-		<url-pattern>/event_core/select/*</url-pattern>
+		<url-pattern>/event_core/d1-select/*</url-pattern>
 	</filter-mapping>
 
 	<filter>
@@ -61,7 +61,7 @@
 	</filter>
 	<filter-mapping>
         <filter-name>D1SearchSolrAuthorizationFilter</filter-name>
-        <url-pattern>/search_core/select/*</url-pattern>
+        <url-pattern>/search_core/d1-select/*</url-pattern>
 	</filter-mapping>
 
 
