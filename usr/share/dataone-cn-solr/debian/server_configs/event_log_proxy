@@ -1,5 +1,32 @@
 ProxyPreserveHost On
 
+# the filter for solr, SessionAuthorizationFilterStrategy, mimics SSLValve functionality
+# 
+# When using mod_proxy_http, the client SSL information is not included in the 
+# protocol (unlike # mod_jk and mod_proxy_ajp). To make the client SSL 
+# information available to Tomcat, some additional configuration is required. 
+# In httpd, mod_headers is used to add the SSL information as HTTP headers.
+#
+# https://tomcat.apache.org/tomcat-7.0-doc/api/org/apache/catalina/valves/SSLValve.html
+#
+<IfModule ssl_module>
+  <LocationMatch "/cn/v(1|2)/(query/logsolr)|(log)">
+    RequestHeader set SSL_CLIENT_S_DN   ""
+    RequestHeader set SSL_CLIENT_VERIFY  ""
+    RequestHeader set SSL_CLIENT_CERT  ""
+    RequestHeader set SSL_CIPHER ""
+	RequestHeader set SSL_SESSION_ID ""
+	RequestHeader set SSL_CIPHER_USEKEYSIZE ""
+
+    RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
+    RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
+    RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
+	RequestHeader set SSL_CIPHER "%{SSL_CIPHER}s"
+    RequestHeader set SSL_SESSION_ID "%{SSL_SESSION_ID}s"
+	RequestHeader set SSL_CIPHER_USEKEYSIZE "%{SSL_CIPHER_USEKEYSIZE}s"
+  </LocationMatch>
+</IfModule>
+
 ProxyPass /cn/v1/query/logsolr/  http://localhost:8983/solr/event_core/d1-select/
 ProxyPass /cn/v2/query/logsolr/  http://localhost:8983/solr/event_core/d1-select/
 
