@@ -694,7 +694,7 @@
     <requestParsers enableRemoteStreaming="true" 
                     multipartUploadLimitInKB="2048000"
                     formdataUploadLimitInKB="2048"
-                    addHttpRequestToContext="false"/>
+                    addHttpRequestToContext="true"/>
 
     <!-- HTTP Caching
 
@@ -784,6 +784,11 @@
        <str name="echoParams">explicit</str>
        <int name="rows">1000</int>
        <str name="q">*:*</str>
+       <str name="fl">dateAggregated,dateUpdated,isPublic,readPermission,entryId,
+       pid,ipAddress,userAgent,subject,event,dateLogged,nodeId,rightsHolder,
+       formatId,formatType,size,country,region,city,geohash_1,geohash_2,
+       geohash_3,geohash_4,geohash_5,geohash_6,geohash_7,geohash_8,geohash_9,
+       location,robotLevel,repeatVisit,d1_version_compliance</str>
      </lst>
     </requestHandler>
 
