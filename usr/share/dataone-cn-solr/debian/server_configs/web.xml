@@ -69,7 +69,7 @@
   <!-- Any path (name) registered in solrconfig.xml will be sent to that filter -->
   <filter>
     <filter-name>SolrRequestFilter</filter-name>
-    <filter-class>org.dataone.solr.servlet.DataOneSolrDispatchFilter</filter-class>
+    <filter-class>org.apache.solr.servlet.SolrDispatchFilter</filter-class>
     <!--
     Exclude patterns is a list of directories that would be short circuited by the 
     SolrDispatchFilter. It includes all Admin UI related static content.
