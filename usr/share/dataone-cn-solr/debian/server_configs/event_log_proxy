@@ -40,7 +40,7 @@ RewriteRule ^/cn/v2/query/logsolr$ http://localhost:8983/solr/event_core/queryEn
 
 RewriteCond %{REQUEST_URI} ^/cn/v1/log/?$
 RewriteCond %{QUERY_STRING} !^.+$
-RewriteRule ^/cn/v1/log/?  http://localhost:8983/solr/event_core/d1-select/?q=entryId:[*+TO+*]&start=0&rows=1000&wt=xslt&tr=d1log.xsl [P]
+RewriteRule ^/cn/v1/log/?  http://localhost:8983/solr/event_core/d1-select/?q=d1_version_compliance:v1&start=0&rows=1000&wt=xslt&tr=d1log.xsl [P]
 
 RewriteCond %{REQUEST_URI} ^/cn/v2/log/?$
 RewriteCond %{QUERY_STRING} !^.+$
@@ -93,12 +93,18 @@ RewriteRule ^/cn/v2/log/?  http://localhost:8983/solr/event_core/d1-select/?q=en
   #if for whatever reason a query has not been composed, then add in the default
   RewriteCond %{QUERY_STRING} !^q=[^&]+.*$
   RewriteCond %{QUERY_STRING} ^(.*)
-  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=entryId:[*+TO+*]&%1
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?q=d1_version_compliance:v1&%1
   
-  #if for whatever reason a query has not been composed, then add in the default
+  #add in d1_version_complaince if not present already
+  RewriteCond %{QUERY_STRING} !d1_version_compliance\:v1
+  RewriteCond %{QUERY_STRING} ^(q=[^&]+)(\??.*)$
+  RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1+AND+d1_version_compliance:v1%2
+
+  #remove a trailing ampersand if any
   RewriteCond %{QUERY_STRING} ^(.*)&$
   RewriteRule ^/cn/v1/log/? /cn/v1/log/?%1
    
+
   RewriteCond %{QUERY_STRING} ^(q=.*)$
   RewriteRule ^/cn/v1/log/? http://localhost:8983/solr/event_core/d1-select/?&wt=xslt&tr=d1log.xsl [QSA,P]
 
