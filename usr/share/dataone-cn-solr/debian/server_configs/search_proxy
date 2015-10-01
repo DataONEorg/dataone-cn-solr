@@ -1,5 +1,25 @@
 RewriteEngine On
-
+<IfModule ssl_module>
+  <LocationMatch "/cn/v(1|2)/(search|query)/solr">
+    RequestHeader set SSL_CLIENT_S_DN   ""
+    RequestHeader set SSL_CLIENT_VERIFY  ""
+    RequestHeader set SSL_CLIENT_CERT  ""
+    RequestHeader set SSL_CIPHER ""
+	RequestHeader set SSL_SESSION_ID ""
+	RequestHeader set SSL_CIPHER_USEKEYSIZE ""
+	RequestHeader set HTTP_COOKIE ""
+	RequestHeader set Authorization ""
+	
+    RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
+    RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
+    RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
+	RequestHeader set SSL_CIPHER "%{SSL_CIPHER}s"
+    RequestHeader set SSL_SESSION_ID "%{SSL_SESSION_ID}s"
+	RequestHeader set SSL_CIPHER_USEKEYSIZE "%{SSL_CIPHER_USEKEYSIZE}s"
+	RequestHeader set HTTP_COOKIE "%{HTTP_COOKIE}e"
+	RequestHeader set Authorization "%{Authorization}e"
+  </LocationMatch>
+</IfModule>
 RewriteRule ^/cn/v1/search/solr/?  http://localhost:8983/solr/search_core/d1-select/?wt=xslt&tr=d1search.xsl&fl=id,size,formatId,checksum,checksumAlgorithm,dateModified [QSA,P]
 RewriteRule ^/cn/v2/search/solr/?  http://localhost:8983/solr/search_core/d1-select/?wt=xslt&tr=d1search_v2.xsl&fl=id,size,formatId,checksum,checksumAlgorithm,dateModified [QSA,P]
 

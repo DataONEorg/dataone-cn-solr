@@ -17,18 +17,24 @@ ProxyPreserveHost On
     RequestHeader set SSL_CIPHER ""
 	RequestHeader set SSL_SESSION_ID ""
 	RequestHeader set SSL_CIPHER_USEKEYSIZE ""
-
+	RequestHeader set HTTP_COOKIE ""
+	RequestHeader set Authorization ""
+	
     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
     RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
     RequestHeader set SSL_CLIENT_CERT "%{SSL_CLIENT_CERT}s"
 	RequestHeader set SSL_CIPHER "%{SSL_CIPHER}s"
     RequestHeader set SSL_SESSION_ID "%{SSL_SESSION_ID}s"
 	RequestHeader set SSL_CIPHER_USEKEYSIZE "%{SSL_CIPHER_USEKEYSIZE}s"
+	RequestHeader set HTTP_COOKIE "%{HTTP_COOKIE}e"
+	RequestHeader set Authorization "%{Authorization}e"
   </LocationMatch>
 </IfModule>
 
 ProxyPass /cn/v1/query/logsolr/  http://localhost:8983/solr/event_core/d1-select/
 ProxyPass /cn/v2/query/logsolr/  http://localhost:8983/solr/event_core/d1-select/
+
+
 
 <IfModule rewrite_module>
 RewriteEngine On
