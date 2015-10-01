@@ -11,6 +11,7 @@ ProxyPreserveHost On
 #
 <IfModule ssl_module>
   <LocationMatch "/cn/v(1|2)/(query/logsolr)|(log)">
+	SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
     RequestHeader set SSL_CLIENT_S_DN   ""
     RequestHeader set SSL_CLIENT_VERIFY  ""
     RequestHeader set SSL_CLIENT_CERT  ""
@@ -18,7 +19,7 @@ ProxyPreserveHost On
 	RequestHeader set SSL_SESSION_ID ""
 	RequestHeader set SSL_CIPHER_USEKEYSIZE ""
 	RequestHeader set HTTP_COOKIE ""
-	RequestHeader set Authorization ""
+    RequestHeader set Authorization ""
 	
     RequestHeader set SSL_CLIENT_S_DN "%{SSL_CLIENT_S_DN}s"
     RequestHeader set SSL_CLIENT_VERIFY "%{SSL_CLIENT_VERIFY}s"
@@ -27,7 +28,8 @@ ProxyPreserveHost On
     RequestHeader set SSL_SESSION_ID "%{SSL_SESSION_ID}s"
 	RequestHeader set SSL_CIPHER_USEKEYSIZE "%{SSL_CIPHER_USEKEYSIZE}s"
 	RequestHeader set HTTP_COOKIE "%{HTTP_COOKIE}e"
-	RequestHeader set Authorization "%{Authorization}e"
+	RequestHeader set Authorization "%{HTTP_AUTHORIZATION}e"
+
   </LocationMatch>
 </IfModule>
 
