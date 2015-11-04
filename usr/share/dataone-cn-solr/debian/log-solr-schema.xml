@@ -309,8 +309,9 @@
    <field name="geohash_8" type="string" 	indexed="true" stored="true" multiValued="false"/>
    <field name="geohash_9" type="string" 	indexed="true" stored="true" multiValued="false"/>
    <field name="location"  type="location" indexed="true" stored="true" multiValued="false"/>
-   <field name="robotLevel" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <field name="repeatVisit" type="boolean" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="inPartialRobotList" type="boolean" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="inFullRobotList" type="boolean" indexed="true" stored="true" required="true" multiValued="false"/>
+   <field name="isRepeatVisit" type="boolean" indexed="true" stored="true" required="true" multiValued="false"/>
    
 <!-- ======================================================================= -->
 	<!-- Dynamic field definitions. If a field name is not found, dynamicFields 
