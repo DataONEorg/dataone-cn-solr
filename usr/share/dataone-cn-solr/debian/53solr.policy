@@ -1,7 +1,0 @@
-// ========== Solr APPLICATION PERMISSIONS ==================================
-
-// These permissions are granted by default to the solr application
-//
-grant codeBase "file:${catalina.base}/webapps/solr/-" {
-        permission java.security.AllPermission;
-};
