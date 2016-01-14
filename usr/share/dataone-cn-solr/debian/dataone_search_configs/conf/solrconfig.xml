@@ -456,7 +456,8 @@
         prov_usedByExecution, prov_usedByUser, prov_wasExecutedByExecution, prov_wasExecutedByUser, prov_hasSources, 
         prov_hasDerivations, prov_instanceOfClass, sem_annotation, sem_annotated_by, sem_annotates,sem_comment, 
         seriesId, fileName, mediaType, mediaTypeProperty, isService, serviceCoupling, serviceTitle, serviceDescription,
-        serviceType, serviceEndpoint, serviceInput, serviceOutput
+        serviceType, serviceEndpoint, serviceInput, serviceOutput, 
+        sem_annotation_bioportal_sm, sem_annotation_bioportal_raw_sm, sem_annotation_esor_sm, sem_annotation_esor_raw_sm
        </str>
 	 </lst>
     </requestHandler>
