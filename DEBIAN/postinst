@@ -107,34 +107,41 @@ fi
 ######
 
 
-if ( cp /usr/share/dataone-cn-solr/debian/server_configs/event_log_proxy /etc/apache2/conf.d >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "cp /usr/share/dataone-cn-solr/debian/server_configs/event_log_proxy succeeded"
+if ( cp /usr/share/dataone-cn-solr/debian/server_configs/event_log_proxy.conf /etc/apache2/conf-available >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    a2enconf event_log_proxy
+    log "cp /usr/share/dataone-cn-solr/debian/server_configs/event_log_proxy.conf succeeded"
 fi
 
-if ( cp /usr/share/dataone-cn-solr/debian/server_configs/search_proxy /etc/apache2/conf.d >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "cp /usr/share/dataone-cn-solr/debian/server_configs/search_proxy succeeded"
+if ( cp /usr/share/dataone-cn-solr/debian/server_configs/search_proxy /etc/apache2/conf-available >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    a2enconf search_proxy
+    log "cp /usr/share/dataone-cn-solr/debian/server_configs/search_proxy.conf succeeded"
 fi
 
-if ( cp /usr/share/dataone-cn-solr/debian/proxy /etc/apache2/conf.d/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "p /usr/share/dataone-cn-solr/debian/proxy succeeded"
+if ( cp /usr/share/dataone-cn-solr/debian/proxy.conf /etc/apache2/conf-available/ >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    a2enconf proxy
+    log "p /usr/share/dataone-cn-solr/debian/proxy.conf succeeded"
 fi
 
-if [ -e /etc/apache2/conf.d/rewrite_cnlog_localhost ]; then
-  if ( rm /etc/apache2/conf.d/rewrite_cnlog_localhost >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "remove /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost succeeded"
+if [ -e /etc/apache2/conf-enabled/rewrite_cnlog_localhost.conf ]; then
+  a2disconf rewrite_cnlog_localhost
+  if ( rm /etc/apache2/conf-available/rewrite_cnlog_localhost.conf >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "remove /usr/share/dataone-cn-solr/debian/rewrite_cnlog_localhost.conf succeeded"
   fi
 fi
 
-if [ -e /etc/apache2/conf.d/rewrite_cnlog ]; then
-	rm /etc/apache2/conf.d/rewrite_cnlog
+if [ -e /etc/apache2/conf-enabled/rewrite_cnlog.conf ]; then
+	a2disconf rewrite_cnlog
+	rm /etc/apache2/conf-available/rewrite_cnlog.conf
 fi
 
-if [ -e /etc/apache2/conf.d/rewrite_cnquery ]; then
-	rm /etc/apache2/conf.d/rewrite_cnquery
+if [ -e /etc/apache2/conf-enabled/rewrite_cnquery.conf ]; then
+	a2disconf rewrite_cnquery
+	rm /etc/apache2/conf-available/rewrite_cnquery.conf
 fi
 
-if [ -e /etc/apache2/conf.d/rewrite_cnsearch ]; then
-	rm /etc/apache2/conf.d/rewrite_cnsearch
+if [ -e /etc/apache2/conf-enabled/rewrite_cnsearch.conf ]; then
+  a2disconf rewrite_cnsearch
+	rm /etc/apache2/conf-available/rewrite_cnsearch.conf
 fi
 
 /etc/init.d/apache2 restart
