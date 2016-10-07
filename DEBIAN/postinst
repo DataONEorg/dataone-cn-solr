@@ -112,7 +112,7 @@ if ( cp /usr/share/dataone-cn-solr/debian/server_configs/event_log_proxy.conf /e
     log "cp /usr/share/dataone-cn-solr/debian/server_configs/event_log_proxy.conf succeeded"
 fi
 
-if ( cp /usr/share/dataone-cn-solr/debian/server_configs/search_proxy /etc/apache2/conf-available >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+if ( cp /usr/share/dataone-cn-solr/debian/server_configs/search_proxy.conf /etc/apache2/conf-available >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
     a2enconf search_proxy
     log "cp /usr/share/dataone-cn-solr/debian/server_configs/search_proxy.conf succeeded"
 fi
