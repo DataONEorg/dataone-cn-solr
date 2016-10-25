@@ -3,7 +3,7 @@ Version: 2.3.0
 Section: utils
 Priority: optional
 Architecture: all
-Depends: dataone-cn-os-core, dataone-cn-metacat, openjdk-8-jdk, dataone-solr, dataone-zookeeper, dataone-cn-version-tool
+Depends: dataone-cn-os-core, dataone-cn-metacat, openjdk-7-jdk, dataone-solr, dataone-zookeeper, dataone-cn-version-tool
 Installed-Size: 1 kb
 Maintainer: Skye Roseboom <sroseboo@dataone.unm.edu>
 Description: This is a metapackage that configures two solr cores are generated as a result of this package - search_core, event_core.
