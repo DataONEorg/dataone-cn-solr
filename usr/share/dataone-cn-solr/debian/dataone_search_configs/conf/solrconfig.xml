@@ -443,7 +443,7 @@
        namedLocation,noBoundingBox,northBoundCoord,numberReplicas,obsoletedBy,
        obsoletes,ogcUrl,order,origin,originator,parameter,phylum,placeKey,
        preferredReplicationMN,presentationCat,project,pubDate,purpose,readPermission,
-       relatedOrganizations,replicaMN,replicationAllowed,replicaVerifiedDate,
+       relatedOrganizations,replicaMN,replicationStatus,replicationAllowed,replicaVerifiedDate,
        resourceMap,rightsHolder,scientificName,sensor,site,size,sku,source,
        southBoundCoord,species,submitter,term,title,topic,updateDate,webUrl,
        westBoundCoord,writePermission,attributeName,
