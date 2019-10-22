@@ -458,7 +458,7 @@
         seriesId, fileName, mediaType, mediaTypeProperty, isService, serviceCoupling, serviceTitle, serviceDescription,
         serviceType, serviceEndpoint, serviceInput, serviceOutput, 
         sem_annotation_bioportal_sm, sem_annotation_bioportal_raw_sm, sem_annotation_cosine_sm, sem_annotation_esor_sm, sem_annotation_esor_raw_sm,
-        funding, funderName, funderIdentifier, awardNumber, awardTitle
+        funding, funderName, funderIdentifier, awardNumber, awardTitle, hasPart, isPartOf, label, logo, collectionQuery
        </str>
 	 </lst>
     </requestHandler>
