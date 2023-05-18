@@ -66,7 +66,7 @@ fi
 cp -rf /usr/share/dataone-cn-solr/debian/dataone_search_configs/* ${SEARCH_CONFIGS_DIR}
 chown -R ${SOLR_USER}:${SOLR_USER} ${SEARCH_CONFIGS_DIR}
 
-if [ -d "/etc/dataone/index" ] then
+if [ -d "/etc/dataone/index" ]; then
     log "/etc/dataone/index exists and don't need to create it." 
 else
     log "Directory /etc/dataone/index does not exists and create it."
