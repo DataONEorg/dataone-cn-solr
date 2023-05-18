@@ -22,6 +22,8 @@ fi
 
 LONG_DATE=`date +%Y%m%d%H%M%S`
 
+TOMCAT=tomcat9
+TOMCAT_USER=tomcat
 D1_LOG_DIR=/var/log/dataone
 D1_LOG_FILE=dataone-cn-solr.remove.log
 
@@ -37,22 +39,22 @@ function log()
 	#
     if [ ! -e ${D1_LOG_DIR} ]; then
         mkdir -p ${D1_LOG_DIR}
-        chown tomcat8:tomcat8 ${D1_LOG_DIR}
+        chown ${TOMCAT_USER}:${TOMCAT_USER} ${D1_LOG_DIR}
     fi
     now=$(date "+%Y-%m-%d %H:%M:%S %Z: ")
     echo -e "${now} postinst $@" >> ${D1_LOG_DIR}/${D1_LOG_FILE}
 }
 
-if (rm /etc/tomcat8/Catalina/localhost/d1-cn-index.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "rm /etc/tomcat8/Catalina/localhost/d1-cn-index.xml succeeded"
+if (rm /etc/${TOMCAT}/Catalina/localhost/d1-cn-index.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "rm /etc/${TOMCAT}/Catalina/localhost/d1-cn-index.xml succeeded"
 fi
 
-if (rm /etc/tomcat8/Catalina/localhost/d1-cn-log.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "rm /etc/tomcat8/Catalina/localhost/d1-cn-log.xml succeeded"
+if (rm /etc/${TOMCAT}/Catalina/localhost/d1-cn-log.xml >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "rm /etc/${TOMCAT}/Catalina/localhost/d1-cn-log.xml succeeded"
 fi
 
-if (rm -f /etc/tomcat8/policy.d/53solr.policy >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
-    log "rm -f /etc/tomcat8/policy.d/53solr.policy succeeded"
+if (rm -f /etc/${TOMCAT}/policy.d/53solr.policy >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
+    log "rm -f /etc/${TOMCAT}/policy.d/53solr.policy succeeded"
 fi
 
 if (rm -f /etc/apache2/jk_mount/solr_jk.* >> ${D1_LOG_DIR}/${D1_LOG_FILE} 2>&1 ); then
