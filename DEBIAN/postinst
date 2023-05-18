@@ -58,7 +58,6 @@ function log()
 log "start"
 
 # Copy search core configuration
-FRESH_SEARCH_CORE_INSTALL="false"
 if [ ! -d "$SEARCH_CONFIGS_DIR" ]; then
 	FRESH_SEARCH_CORE_INSTALL="true"
 	mkdir ${SEARCH_CONFIGS_DIR}
@@ -79,7 +78,6 @@ cp /usr/share/dataone-cn-solr/debian/dataone_search_configs/conf/schema.xml /etc
 chown ${SOLR_USER}:${SOLR_USER} /etc/dataone/index/schema.xml
 
 # Copy event log core configuration
-FRESH_EVENT_LOG_CORE_INSTALL="false"
 if [ ! -d "$EVENT_LOG_CONFIGS_DIR" ]; then
 	FRESH_EVENT_LOG_CORE_INSTALL="true"
 	mkdir ${EVENT_LOG_CONFIGS_DIR}
